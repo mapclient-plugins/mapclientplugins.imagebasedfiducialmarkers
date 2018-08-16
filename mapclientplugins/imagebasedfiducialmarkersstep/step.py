@@ -8,6 +8,10 @@ from PySide import QtGui
 
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.imagebasedfiducialmarkersstep.configuredialog import ConfigureDialog
+from mapclientplugins.imagebasedfiducialmarkersstep.model.imagebasedfiducialmarkersmastermodel import \
+    ImageBasedFiducialMarkersMasterModel
+from mapclientplugins.imagebasedfiducialmarkersstep.view.imagebasedfiducialmarkerswidget import \
+    ImageBasedFiducialMarkersWidget
 
 
 class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
@@ -35,6 +39,8 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
         # Config:
         self._config = {}
         self._config['identifier'] = ''
+        self._view = None
+        self._model = None
 
     def execute(self):
         """
@@ -43,6 +49,14 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
         may be connected up to a button in a widget for example.
         """
         # Put your execute step code here before calling the '_doneExecution' method.
+        self._model = ImageBasedFiducialMarkersMasterModel()
+        self._view = ImageBasedFiducialMarkersWidget(self._model)
+        self._view.registerDoneCallback(self._interactionDone)
+        self._setCurrentWidget(self._view)
+
+    def _interactionDone(self):
+        self._view = None
+        self._model = None
         self._doneExecution()
 
     def setPortData(self, index, dataIn):
@@ -74,7 +88,7 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
         then set:
             self._configured = True
         """
-        dlg = ConfigureDialog()
+        dlg = ConfigureDialog(self._main_window)
         dlg.identifierOccursCount = self._identifierOccursCount
         dlg.setConfig(self._config)
         dlg.validate()
