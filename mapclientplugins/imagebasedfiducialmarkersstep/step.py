@@ -35,7 +35,7 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#images'))
         # Port data:
         self._portData0 = None # fiducial_marker_data
-        self._portData1 = None # http://physiomeproject.org/workflow/1.0/rdf-schema#images
+        self._images_info = None # http://physiomeproject.org/workflow/1.0/rdf-schema#images
         # Config:
         self._config = {}
         self._config['identifier'] = ''
@@ -51,6 +51,7 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
         # Put your execute step code here before calling the '_doneExecution' method.
         self._model = ImageBasedFiducialMarkersMasterModel()
         self._view = ImageBasedFiducialMarkersWidget(self._model)
+        self._view.set_images_info(self._images_info)
         self._view.register_done_callback(self._interactionDone)
         self._setCurrentWidget(self._view)
 
@@ -68,7 +69,7 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
         :param index: Index of the port to return.
         :param dataIn: The data to set for the port at the given index.
         """
-        self._portData1 = dataIn # http://physiomeproject.org/workflow/1.0/rdf-schema#images
+        self._images_info = dataIn # http://physiomeproject.org/workflow/1.0/rdf-schema#images
 
     def getPortData(self, index):
         """

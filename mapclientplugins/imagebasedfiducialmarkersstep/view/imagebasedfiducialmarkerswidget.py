@@ -14,6 +14,7 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
         self._ui.sceneviewer_widget.setContext(model.get_context())
 
         self._model = model
+        self._image_plane_model = model.get_image_plane_model()
         self._done_callback = None
 
         self._make_connections()
@@ -43,3 +44,6 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
 
     def register_done_callback(self, done_callback):
         self._done_callback = done_callback
+
+    def set_images_info(self, images_info):
+        self._image_plane_model.set_images_info(images_info)
