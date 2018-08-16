@@ -51,7 +51,7 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
         # Put your execute step code here before calling the '_doneExecution' method.
         self._model = ImageBasedFiducialMarkersMasterModel()
         self._view = ImageBasedFiducialMarkersWidget(self._model)
-        self._view.registerDoneCallback(self._interactionDone)
+        self._view.register_done_callback(self._interactionDone)
         self._setCurrentWidget(self._view)
 
     def _interactionDone(self):

@@ -41,5 +41,5 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
         if self._ui.sceneviewer_widget.getSceneviewer() is not None:
             self._ui.sceneviewer_widget.viewAll()
 
-    def registerDoneCallback(self, done_callback):
+    def register_done_callback(self, done_callback):
         self._done_callback = done_callback
