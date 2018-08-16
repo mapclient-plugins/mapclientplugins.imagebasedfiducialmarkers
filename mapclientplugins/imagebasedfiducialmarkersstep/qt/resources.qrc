@@ -1,0 +1,6 @@
+
+<RCC>
+  <qresource prefix="imagebasedfiducialmarkersstep">
+    <file>images/image-processing.png</file>
+  </qresource>
+</RCC>
