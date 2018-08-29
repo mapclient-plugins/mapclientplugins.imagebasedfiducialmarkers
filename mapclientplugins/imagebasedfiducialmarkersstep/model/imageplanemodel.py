@@ -9,6 +9,7 @@ class ImagePlaneModel(object):
 
     def __init__(self, master_model):
         self._master_model = master_model
+        self._frame_count = -1
         self._scale_field = None
         self._image_based_material = None
         self._scaled_coordinate_field = None
@@ -31,6 +32,22 @@ class ImagePlaneModel(object):
                 self._scale_field.assignReal(cache, [width, height, 1.0])
             image_field = createVolumeImageField(field_module, images)
             self._image_based_material = createMaterialUsingImageField(region, image_field)
+
+    def get_frame_count(self):
+        return self._frame_count
+
+    def get_time_for_frame_index(self, index, frames_per_second):
+        duration = self._frame_count / frames_per_second
+        frame_separation = 1 / self._frame_count
+        initial_offset = frame_separation / 2
+
+        return (index * frame_separation + initial_offset) * duration
+
+    def get_frame_index_for_time(self, time, frames_per_second):
+        duration = self._frame_count / frames_per_second
+        frame_separation = 1 / self._frame_count
+        initial_offset = frame_separation / 2
+        return int((time / duration - initial_offset) / frame_separation + 0.5)
 
     def get_material(self):
         return self._image_based_material
