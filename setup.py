@@ -19,6 +19,7 @@ readme = readfile("README.rst", split=True)[3:]  # skip title
 # For requirements not hosted on PyPi place listings
 # into the 'requirements.txt' file.
 requires = ['PySide',
+            'git+https://github.com/scardine/image_size',
             'opencmiss.zincwidgets']  # minimal requirements listing
 source_license = readfile("LICENSE")
 
