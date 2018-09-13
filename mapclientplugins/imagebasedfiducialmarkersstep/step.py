@@ -3,6 +3,7 @@
 MAP Client Plugin Step
 """
 import json
+import os
 
 from PySide import QtGui
 
@@ -37,8 +38,7 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
         self._portData0 = None # fiducial_marker_data
         self._images_info = None # http://physiomeproject.org/workflow/1.0/rdf-schema#images
         # Config:
-        self._config = {}
-        self._config['identifier'] = ''
+        self._config = {'identifier': ''}
         self._view = None
         self._model = None
 
@@ -49,16 +49,37 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
         may be connected up to a button in a widget for example.
         """
         # Put your execute step code here before calling the '_doneExecution' method.
+        all_settings = {}
+        try:
+            with open(self._get_settings_file_name()) as f:
+                all_settings = json.loads(f.read())
+        except FileNotFoundError:
+            pass
+
         self._model = ImageBasedFiducialMarkersMasterModel()
+        if 'model' in all_settings:
+            self._model.set_settings(all_settings['model'])
+
         self._view = ImageBasedFiducialMarkersWidget(self._model)
+        if 'view' in all_settings:
+            self._view.set_settings(all_settings['view'])
+
         self._view.set_images_info(self._images_info)
         self._view.register_done_callback(self._interactionDone)
         self._setCurrentWidget(self._view)
 
     def _interactionDone(self):
+        all_settings = {'model': self._model.get_settings(), 'view': self._view.get_settings()}
+        settings_in_string_form = json.dumps(all_settings, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+        with open(self._get_settings_file_name(), 'w') as f:
+            f.write(settings_in_string_form)
+
         self._view = None
         self._model = None
         self._doneExecution()
+
+    def _get_settings_file_name(self):
+        return os.path.join(self._location, self._config['identifier'] + '.settings')
 
     def setPortData(self, index, dataIn):
         """

@@ -130,6 +130,53 @@
        </widget>
       </item>
       <item>
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="title">
+         <string>Activity:</string>
+        </property>
+        <layout class="QFormLayout" name="formLayout">
+         <item row="0" column="0">
+          <widget class="QRadioButton" name="defineROI_radioButton">
+           <property name="text">
+            <string>Define ROI</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="defineROI_pushButton">
+           <property name="text">
+            <string>Confirm</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="setInitialTrackingPoints_pushButton">
+           <property name="text">
+            <string>Confirm</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QRadioButton" name="setInitialTrackingPoints_radioButton">
+           <property name="text">
+            <string>Set initial tracking points</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QRadioButton" name="finaliseTrackingPoints_radioButton">
+           <property name="text">
+            <string>Finalise tracking points</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -141,6 +188,28 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="title">
+         <string/>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="statusText_label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>1</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </item>
       <item>
        <widget class="QFrame" name="frame">
@@ -181,7 +250,7 @@
     </widget>
    </item>
    <item>
-    <widget class="SceneviewerWidget" name="sceneviewer_widget" native="true">
+    <widget class="BaseSceneviewerWidget" name="sceneviewer_widget" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>1</horstretch>
@@ -194,9 +263,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SceneviewerWidget</class>
+   <class>BaseSceneviewerWidget</class>
    <extends>QWidget</extends>
-   <header>opencmiss/zincwidgets/sceneviewerwidget.h</header>
+   <header>opencmiss\zincwidgets\basesceneviewerwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

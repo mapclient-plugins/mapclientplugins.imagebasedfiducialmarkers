@@ -1,9 +1,12 @@
 from PySide import QtCore
+from opencmiss.utils.zinc import defineStandardVisualisationTools
 
 from opencmiss.zinc.context import Context
 
 from mapclientplugins.imagebasedfiducialmarkersstep.model.imageplanemodel import ImagePlaneModel
+from mapclientplugins.imagebasedfiducialmarkersstep.model.trackingpointsmodel import TrackingPointsModel
 from mapclientplugins.imagebasedfiducialmarkersstep.scene.imageplanescene import ImagePlaneScene
+from mapclientplugins.imagebasedfiducialmarkersstep.scene.trackingpointsscene import TrackingPointsScene
 
 
 class ImageBasedFiducialMarkersMasterModel(object):
@@ -15,9 +18,8 @@ class ImageBasedFiducialMarkersMasterModel(object):
         }
 
         self._context = Context("ImageBasedFiducialMarkers")
-        self._region_name = "image"
+        defineStandardVisualisationTools(self._context)
         self._default_region = self._context.getDefaultRegion()
-        self._region = None
 
         timekeeper_module = self._context.getTimekeepermodule()
         self._timekeeper = timekeeper_module.getDefaultTimekeeper()
@@ -27,7 +29,9 @@ class ImageBasedFiducialMarkersMasterModel(object):
         self._frame_index_update = None
 
         self._image_plane_model = ImagePlaneModel(self)
+        self._tracking_points_model = TrackingPointsModel(self)
         self._image_plane_scene = ImagePlaneScene(self)
+        self._tracking_points_scene = TrackingPointsScene(self)
 
         self._make_connections()
 
@@ -100,11 +104,11 @@ class ImageBasedFiducialMarkersMasterModel(object):
     def get_context(self):
         return self._context
 
-    def get_region(self):
-        return self._region
+    def get_default_region(self):
+        return self._default_region
 
     def get_scene(self):
-        return self._region.getScene()
+        return self._default_region.getScene()
 
     def get_timekeeper(self):
         return self._timekeeper
@@ -115,12 +119,23 @@ class ImageBasedFiducialMarkersMasterModel(object):
     def get_image_plane_model(self):
         return self._image_plane_model
 
+    def get_tracking_points_model(self):
+        return self._tracking_points_model
+
     def get_image_plane_scene(self):
         return self._image_plane_scene
 
+    def get_tracking_points_scene(self):
+        return self._tracking_points_scene
+
     def reset(self):
-        if self._region:
-            self._default_region.removeChild(self._region)
-        self._region = self._default_region.createChild(self._region_name)
         self._image_plane_model.create_model()
         self._image_plane_scene.create_graphics()
+        self._tracking_points_model.create_model()
+        self._tracking_points_scene.create_graphics()
+
+    def set_settings(self, settings):
+        self._settings.update(settings)
+
+    def get_settings(self):
+        return self._settings

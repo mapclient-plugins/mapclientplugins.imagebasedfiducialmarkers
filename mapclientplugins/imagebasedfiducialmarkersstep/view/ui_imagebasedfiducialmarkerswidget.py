@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mapclientplugins\imagebasedfiducialmarkersstep\qt\imagebasedfiducialmarkerswidget.ui'
 #
-# Created: Wed Aug 29 14:39:33 2018
+# Created: Tue Sep 11 14:37:18 2018
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -72,8 +72,43 @@ class Ui_ImageBasedFiducialMarkersWidget(object):
         self.horizontalLayout_4.addWidget(self.numFramesValue_label)
         self.gridLayout_2.addWidget(self.numFrames_frame, 0, 2, 1, 1)
         self.verticalLayout.addWidget(self.video_groupBox)
+        self.groupBox_2 = QtGui.QGroupBox(self.controlPanel_groupBox)
+        self.groupBox_2.setObjectName("groupBox_2")
+        self.formLayout = QtGui.QFormLayout(self.groupBox_2)
+        self.formLayout.setObjectName("formLayout")
+        self.defineROI_radioButton = QtGui.QRadioButton(self.groupBox_2)
+        self.defineROI_radioButton.setChecked(True)
+        self.defineROI_radioButton.setObjectName("defineROI_radioButton")
+        self.formLayout.setWidget(0, QtGui.QFormLayout.LabelRole, self.defineROI_radioButton)
+        self.defineROI_pushButton = QtGui.QPushButton(self.groupBox_2)
+        self.defineROI_pushButton.setObjectName("defineROI_pushButton")
+        self.formLayout.setWidget(0, QtGui.QFormLayout.FieldRole, self.defineROI_pushButton)
+        self.setInitialTrackingPoints_pushButton = QtGui.QPushButton(self.groupBox_2)
+        self.setInitialTrackingPoints_pushButton.setObjectName("setInitialTrackingPoints_pushButton")
+        self.formLayout.setWidget(1, QtGui.QFormLayout.FieldRole, self.setInitialTrackingPoints_pushButton)
+        self.setInitialTrackingPoints_radioButton = QtGui.QRadioButton(self.groupBox_2)
+        self.setInitialTrackingPoints_radioButton.setObjectName("setInitialTrackingPoints_radioButton")
+        self.formLayout.setWidget(1, QtGui.QFormLayout.LabelRole, self.setInitialTrackingPoints_radioButton)
+        self.finaliseTrackingPoints_radioButton = QtGui.QRadioButton(self.groupBox_2)
+        self.finaliseTrackingPoints_radioButton.setObjectName("finaliseTrackingPoints_radioButton")
+        self.formLayout.setWidget(2, QtGui.QFormLayout.LabelRole, self.finaliseTrackingPoints_radioButton)
+        self.verticalLayout.addWidget(self.groupBox_2)
         spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
+        self.groupBox = QtGui.QGroupBox(self.controlPanel_groupBox)
+        self.groupBox.setTitle("")
+        self.groupBox.setObjectName("groupBox")
+        self.horizontalLayout_3 = QtGui.QHBoxLayout(self.groupBox)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.statusText_label = QtGui.QLabel(self.groupBox)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.statusText_label.sizePolicy().hasHeightForWidth())
+        self.statusText_label.setSizePolicy(sizePolicy)
+        self.statusText_label.setObjectName("statusText_label")
+        self.horizontalLayout_3.addWidget(self.statusText_label)
+        self.verticalLayout.addWidget(self.groupBox)
         self.frame = QtGui.QFrame(self.controlPanel_groupBox)
         self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtGui.QFrame.Raised)
@@ -88,7 +123,7 @@ class Ui_ImageBasedFiducialMarkersWidget(object):
         self.horizontalLayout_2.addItem(spacerItem1)
         self.verticalLayout.addWidget(self.frame)
         self.horizontalLayout.addWidget(self.controlPanel_groupBox)
-        self.sceneviewer_widget = SceneviewerWidget(ImageBasedFiducialMarkersWidget)
+        self.sceneviewer_widget = BaseSceneviewerWidget(ImageBasedFiducialMarkersWidget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(1)
         sizePolicy.setVerticalStretch(0)
@@ -112,6 +147,14 @@ class Ui_ImageBasedFiducialMarkersWidget(object):
         self.framesPerSecond_label.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Frames per second:", None, QtGui.QApplication.UnicodeUTF8))
         self.numFrames_label.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "# frames:", None, QtGui.QApplication.UnicodeUTF8))
         self.numFramesValue_label.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_2.setTitle(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Activity:", None, QtGui.QApplication.UnicodeUTF8))
+        self.defineROI_radioButton.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Define ROI", None, QtGui.QApplication.UnicodeUTF8))
+        self.defineROI_pushButton.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Confirm", None, QtGui.QApplication.UnicodeUTF8))
+        self.setInitialTrackingPoints_pushButton.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Confirm", None, QtGui.QApplication.UnicodeUTF8))
+        self.setInitialTrackingPoints_radioButton.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Set initial tracking points", None, QtGui.QApplication.UnicodeUTF8))
+        self.finaliseTrackingPoints_radioButton.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Finalise tracking points", None, QtGui.QApplication.UnicodeUTF8))
+        self.statusText_label.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
         self.done_pushButton.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Done", None, QtGui.QApplication.UnicodeUTF8))
 
-from opencmiss.zincwidgets.sceneviewerwidget import SceneviewerWidget
+
+from opencmiss.zincwidgets.basesceneviewerwidget import BaseSceneviewerWidget

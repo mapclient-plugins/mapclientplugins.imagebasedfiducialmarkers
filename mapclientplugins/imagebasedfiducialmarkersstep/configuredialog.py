@@ -69,8 +69,7 @@ class ConfigureDialog(QtGui.QDialog):
         identifier over the whole of the workflow.
         '''
         self._previousIdentifier = self._ui.lineEdit0.text()
-        config = {}
-        config['identifier'] = self._ui.lineEdit0.text()
+        config = {'identifier': self._ui.lineEdit0.text()}
         return config
 
     def setConfig(self, config):

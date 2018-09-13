@@ -6,9 +6,9 @@ class ImagePlaneScene(object):
         self._master_model = master_model
 
     def create_graphics(self):
-        scene = self._master_model.get_scene()
-        region = self._master_model.get_region()
         image_plane_model = self._master_model.get_image_plane_model()
+        region = image_plane_model.get_region()
+        scene = region.getScene()
         coordinate_field = image_plane_model.get_coordinate_field()
 
         scene.beginChange()
@@ -31,6 +31,6 @@ class ImagePlaneScene(object):
     def set_image_material(self):
         image_plane_model = self._master_model.get_image_plane_model()
         image_material = image_plane_model.get_material()
-        scene = self._master_model.get_scene()
+        scene = image_plane_model.get_region().getScene()
         surfaces = scene.findGraphicsByName('plane-surfaces')
         surfaces.setMaterial(image_material)
