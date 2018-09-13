@@ -25,5 +25,5 @@ class TrackingPointsScene(object):
         points.setFieldDomainType(Field.DOMAIN_TYPE_DATAPOINTS)
         attributes = points.getGraphicspointattributes()
         attributes.setGlyphShapeType(Glyph.SHAPE_TYPE_SPHERE)
-        attributes.setBaseSize(2.3)
+        attributes.setBaseSize(5.7)
         scene.endChange()

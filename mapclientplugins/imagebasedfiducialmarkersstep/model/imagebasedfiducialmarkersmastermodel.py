@@ -1,4 +1,4 @@
-from PySide import QtCore
+from PySideX import QtCore
 from opencmiss.utils.zinc import defineStandardVisualisationTools
 
 from opencmiss.zinc.context import Context
@@ -112,6 +112,9 @@ class ImageBasedFiducialMarkersMasterModel(object):
 
     def get_timekeeper(self):
         return self._timekeeper
+
+    def get_timekeeper_time(self):
+        return self._timekeeper.getTime()
 
     def set_time(self, value):
         pass

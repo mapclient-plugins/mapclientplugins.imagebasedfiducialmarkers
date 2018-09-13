@@ -1,5 +1,5 @@
 
-from PySide import QtGui, QtCore
+from PySideX import QtWidgets, QtCore
 
 from opencmiss.zinchandlers.scenemanipulation import SceneManipulation
 
@@ -13,7 +13,7 @@ PLAY_TEXT = 'Play'
 STOP_TEXT = 'Stop'
 
 
-class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
+class ImageBasedFiducialMarkersWidget(QtWidgets.QWidget):
 
     def __init__(self, model, parent=None):
         super(ImageBasedFiducialMarkersWidget, self).__init__(parent)
@@ -144,25 +144,25 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
     def _leave_define_roi(self):
         rectangle_description = self._rectangle_tool.get_rectangle_box_description()
         if sum(rectangle_description) < 0:
-            QtGui.QMessageBox.warning(self, 'Invalid ROI', 'The region of interest is invalid and region'
-                                                           ' analysis will not be performed')
+            QtWidgets.QMessageBox.warning(self, 'Invalid ROI', 'The region of interest is invalid and region'
+                                                               ' analysis will not be performed')
         else:
             x = rectangle_description[0]
             y = rectangle_description[1]
-            QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+            QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
             element = self._ui.sceneviewer_widget.get_nearest_element(x, y)
-            QtGui.QApplication.restoreOverrideCursor()
+            QtWidgets.QApplication.restoreOverrideCursor()
             if element.isValid():
-                QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+                QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
                 image_roi = self._image_plane_model.convert_to_image_roi(
                     self._ui.sceneviewer_widget.get_zinc_sceneviewer(), element, rectangle_description)
                 image_index = self._ui.frameIndex_spinBox.value() - 1
                 key_points = self._image_plane_model.analyse_roi(image_index, image_roi)
                 self._tracking_points_model.create_key_points(key_points)
-                QtGui.QApplication.restoreOverrideCursor()
+                QtWidgets.QApplication.restoreOverrideCursor()
             else:
-                QtGui.QMessageBox.warning(self, 'Invalid ROI', 'The region of interest is invalid and region'
-                                                               ' analysis will not be performed')
+                QtWidgets.QMessageBox.warning(self, 'Invalid ROI', 'The region of interest is invalid and region'
+                                                                   ' analysis will not be performed')
 
         self._rectangle_tool.remove_rectangle_box()
         self._ui.sceneviewer_widget.unregister_handler(self._rectangle_tool)
@@ -234,7 +234,6 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
         self._model.set_time_duration(value)
 
     def _time_play_stop_clicked(self):
-        print('time play stop clicked')
         current_text = self._ui.timePlayStop_pushButton.text()
         if current_text == PLAY_TEXT:
             self._ui.timePlayStop_pushButton.setText(STOP_TEXT)
