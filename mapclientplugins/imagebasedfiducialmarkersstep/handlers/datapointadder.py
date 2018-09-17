@@ -1,12 +1,10 @@
-from opencmiss.zinc.sceneviewerinput import Sceneviewerinput
 from opencmiss.zinchandlers.keyactivatedhandler import KeyActivatedHandler
-from opencmiss.zinchandlers.abstracthandler import BUTTON_MAP
 
 
-class DataPointHandler(KeyActivatedHandler):
+class DataPointAdder(KeyActivatedHandler):
 
     def __init__(self, key_code):
-        super(DataPointHandler, self).__init__(key_code)
+        super(DataPointAdder, self).__init__(key_code)
         self._model = None
         self._active_node = None
 
@@ -25,7 +23,7 @@ class DataPointHandler(KeyActivatedHandler):
         return [near_plane_point, far_plane_point]
 
     def mouse_press_event(self, event):
-        super(DataPointHandler, self).mouse_press_event(event)
+        super(DataPointAdder, self).mouse_press_event(event)
         if self._processing_mouse_events:
             x = event.x()
             y = event.y()
@@ -39,7 +37,7 @@ class DataPointHandler(KeyActivatedHandler):
             self._active_node = node
 
     def mouse_move_event(self, event):
-        super(DataPointHandler, self).mouse_move_event(event)
+        super(DataPointAdder, self).mouse_move_event(event)
         if self._processing_mouse_events and self._active_node:
             x = event.x()
             y = event.y()
@@ -47,12 +45,7 @@ class DataPointHandler(KeyActivatedHandler):
             self._model.set_node_location(self._active_node, ray)
 
     def mouse_release_event(self, event):
-        super(DataPointHandler, self).mouse_release_event(event)
+        super(DataPointAdder, self).mouse_release_event(event)
         if self._processing_mouse_events and self._active_node:
-            if BUTTON_MAP[event.button()] == Sceneviewerinput.BUTTON_TYPE_RIGHT:
-                self._model.remove_node(self._active_node.getIdentifier())
-            else:
-                self._model.deselect_node(self._active_node.getIdentifier())
-
+            self._model.deselect_node(self._active_node.getIdentifier())
             self._active_node = None
-

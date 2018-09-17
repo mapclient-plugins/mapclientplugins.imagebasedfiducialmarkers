@@ -36,6 +36,10 @@ class TrackingPointsModel(object):
         node = self.get_node(identifier)
         self._selection_group.removeNode(node)
 
+    def is_selected(self, identifier):
+        node = self.get_node(identifier)
+        return self._selection_group.containsNode(node)
+
     def create_node(self, location):
         time = self._master_model.get_timekeeper_time()
         field_module = self._coordinate_field.getFieldmodule()

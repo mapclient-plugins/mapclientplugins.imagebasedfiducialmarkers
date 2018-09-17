@@ -3,7 +3,8 @@ from PySide import QtGui, QtCore
 
 from opencmiss.zinchandlers.scenemanipulation import SceneManipulation
 
-from mapclientplugins.imagebasedfiducialmarkersstep.handlers.datapointhandler import DataPointHandler
+from mapclientplugins.imagebasedfiducialmarkersstep.handlers.datapointhandler import DataPointAdder
+from mapclientplugins.imagebasedfiducialmarkersstep.handlers.datapointremover import DataPointRemover
 from mapclientplugins.imagebasedfiducialmarkersstep.handlers.rectangletool import RectangleTool
 from mapclientplugins.imagebasedfiducialmarkersstep.static.strings import DEFINE_ROI_STRING, \
     SET_INITIAL_TRACKING_POINTS_STRING, FINALISE_TRACKING_POINTS_STRING
@@ -34,9 +35,11 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
         self._done_callback = None
 
         self._rectangle_tool = RectangleTool(QtCore.Qt.Key_D)
-        self._data_point_handler = DataPointHandler(QtCore.Qt.Key_A)
+        self._data_point_adder = DataPointAdder(QtCore.Qt.Key_A)
+        self._data_point_remover = DataPointRemover(QtCore.Qt.Key_D)
         self._data_point_tool = DataPointTool(self._tracking_points_model, self._image_plane_model)
-        self._data_point_handler.set_model(self._data_point_tool)
+        self._data_point_adder.set_model(self._data_point_tool)
+        self._data_point_remover.set_model(self._data_point_tool)
 
         self._setup_handlers()
         self._set_initial_ui_state()
@@ -150,7 +153,7 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
         rectangle_description = self._rectangle_tool.get_rectangle_box_description()
         if sum(rectangle_description) < 0:
             QtGui.QMessageBox.warning(self, 'Invalid ROI', 'The region of interest is invalid and region'
-                                                               ' analysis will not be performed')
+                                      ' analysis will not be performed')
         else:
             x = rectangle_description[0]
             y = rectangle_description[1]
@@ -167,7 +170,7 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
                 QtGui.QApplication.restoreOverrideCursor()
             else:
                 QtGui.QMessageBox.warning(self, 'Invalid ROI', 'The region of interest is invalid and region'
-                                                                   ' analysis will not be performed')
+                                          ' analysis will not be performed')
 
         self._rectangle_tool.remove_rectangle_box()
         self._ui.sceneviewer_widget.unregister_handler(self._rectangle_tool)
@@ -178,10 +181,12 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
         self._ui.sceneviewer_widget.register_key_listener(QtCore.Qt.Key_Return, self._define_roi_button_clicked)
 
     def _enter_set_initial_tracking_points(self):
-        self._ui.sceneviewer_widget.register_handler(self._data_point_handler)
+        self._ui.sceneviewer_widget.register_handler(self._data_point_adder)
+        self._ui.sceneviewer_widget.register_handler(self._data_point_remover)
 
     def _leave_set_initial_tracking_points(self):
-        self._ui.sceneviewer_widget.register_handler(self._data_point_handler)
+        self._ui.sceneviewer_widget.unregister_handler(self._data_point_adder)
+        self._ui.sceneviewer_widget.unregister_handler(self._data_point_remover)
 
     def _enter_finalise_tracking_points(self):
         pass

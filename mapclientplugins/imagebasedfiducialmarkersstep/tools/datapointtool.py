@@ -21,6 +21,9 @@ class DataPointTool(object):
     def deselect_node(self, node_identifier):
         self._points_model.deselect_node(node_identifier)
 
+    def is_selected(self, node_identifier):
+        return self._points_model.is_selected(node_identifier)
+
     def set_node_location(self, node, ray):
         location = self._plane_model.get_intersection_point(ray)
         self._points_model.set_node_location(node, location)
