@@ -5,7 +5,7 @@ MAP Client Plugin Step
 import json
 import os
 
-from PySideX import QtWidgets
+from PySide import QtGui
 
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.imagebasedfiducialmarkersstep.configuredialog import ConfigureDialog
@@ -26,7 +26,7 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
         self._configured = False # A step cannot be executed until it has been configured.
         self._category = 'Image Processing'
         # Add any other initialisation code here:
-        self._icon = QtWidgets.QImage(':/imagebasedfiducialmarkersstep/images/image-processing.png')
+        self._icon = QtGui.QImage(':/imagebasedfiducialmarkersstep/images/image-processing.png')
         # Ports:
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#provides',
@@ -154,5 +154,3 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
         d.identifierOccursCount = self._identifierOccursCount
         d.setConfig(self._config)
         self._configured = d.validate()
-
-

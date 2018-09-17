@@ -9,6 +9,7 @@ from opencmiss.zinc.scenecoordinatesystem import SCENECOORDINATESYSTEM_LOCAL, \
 from opencmiss.zinc.field import FieldFindMeshLocation
 from opencmiss.utils.zinc import createFiniteElementField, createSquare2DFiniteElement, createVolumeImageField, \
     createMaterialUsingImageField
+from opencmiss.utils.maths.algorithms import calculateLinePlaneIntersection
 
 
 class ImagePlaneModel(object):
@@ -66,6 +67,9 @@ class ImagePlaneModel(object):
             scene_viewer, x2, y2, element, self._scaled_coordinate_field)
 
         return self._calculate_image_pixels_rectangle(top_left_mesh_location, bottom_right_mesh_location)
+
+    def get_intersection_point(self, ray):
+        return calculateLinePlaneIntersection(ray[0], ray[1], [0.0, 0.0, 0.0], [0.0, 0.0, 1.0])
 
     def load_images(self, images_info):
         if images_info is not None:
