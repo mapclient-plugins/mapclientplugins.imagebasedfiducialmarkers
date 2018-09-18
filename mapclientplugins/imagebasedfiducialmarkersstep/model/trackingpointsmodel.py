@@ -77,6 +77,20 @@ class TrackingPointsModel(object):
         key_points_coordinates = [[float(key_point[0]), float(key_point[1]), 0.0] for key_point in key_points]
         createNodes(self._coordinate_field, key_points_coordinates, node_set_name='datapoints', time=time)
 
+    def get_key_points(self):
+        key_points = []
+        field_module = self._region.getFieldmodule()
+        field_cache = field_module.createFieldcache()
+        node_set = field_module.findNodesetByName('datapoints')
+        node_set_iterator = node_set.createNodeiterator()
+        node = node_set_iterator.next()
+        while node and node.isValid():
+            coords = self._coordinate_field.evaluateReal(field_cache, 3)
+            print(coords)
+            node = node_set_iterator.next()
+
+        return key_points
+
     def create_model(self):
         default_region = self._master_model.get_default_region()
         if self._region is not None:

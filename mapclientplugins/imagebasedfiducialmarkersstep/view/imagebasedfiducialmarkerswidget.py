@@ -3,12 +3,13 @@ from PySide import QtGui, QtCore
 
 from opencmiss.zinchandlers.scenemanipulation import SceneManipulation
 
-from mapclientplugins.imagebasedfiducialmarkersstep.handlers.datapointhandler import DataPointAdder
+from mapclientplugins.imagebasedfiducialmarkersstep.handlers.datapointadder import DataPointAdder
 from mapclientplugins.imagebasedfiducialmarkersstep.handlers.datapointremover import DataPointRemover
 from mapclientplugins.imagebasedfiducialmarkersstep.handlers.rectangletool import RectangleTool
 from mapclientplugins.imagebasedfiducialmarkersstep.static.strings import DEFINE_ROI_STRING, \
     SET_INITIAL_TRACKING_POINTS_STRING, FINALISE_TRACKING_POINTS_STRING
 from mapclientplugins.imagebasedfiducialmarkersstep.tools.datapointtool import DataPointTool
+from mapclientplugins.imagebasedfiducialmarkersstep.tools.trackingtool import TrackingTool
 from mapclientplugins.imagebasedfiducialmarkersstep.view.ui_imagebasedfiducialmarkerswidget\
     import Ui_ImageBasedFiducialMarkersWidget
 
@@ -29,17 +30,14 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
         self._model = model
         self._model.register_time_value_update_callback(self._update_time_value)
         self._model.register_frame_index_update_callback(self._update_frame_index)
-        self._image_plane_model = model.get_image_plane_model()
-        self._tracking_points_model = model.get_tracking_points_model()
         self._image_plane_scene = model.get_image_plane_scene()
         self._done_callback = None
 
-        self._rectangle_tool = RectangleTool(QtCore.Qt.Key_D)
-        self._data_point_adder = DataPointAdder(QtCore.Qt.Key_A)
-        self._data_point_remover = DataPointRemover(QtCore.Qt.Key_D)
-        self._data_point_tool = DataPointTool(self._tracking_points_model, self._image_plane_model)
-        self._data_point_adder.set_model(self._data_point_tool)
-        self._data_point_remover.set_model(self._data_point_tool)
+        self._image_plane_model = model.get_image_plane_model()
+        tracking_points_model = model.get_tracking_points_model()
+
+        self._data_point_tool = DataPointTool(tracking_points_model, self._image_plane_model)
+        self._tracking_tool = TrackingTool(tracking_points_model, self._image_plane_model)
 
         self._setup_handlers()
         self._set_initial_ui_state()
@@ -148,6 +146,16 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
     def _setup_handlers(self):
         basic_handler = SceneManipulation()
         self._ui.sceneviewer_widget.register_handler(basic_handler)
+        self._rectangle_tool = RectangleTool(QtCore.Qt.Key_D)
+        self._data_point_adder = DataPointAdder(QtCore.Qt.Key_A)
+        self._data_point_adder.set_model(self._data_point_tool)
+        self._data_point_remover = DataPointRemover(QtCore.Qt.Key_D)
+        self._data_point_remover.set_model(self._data_point_tool)
+
+
+    def _enter_define_roi(self):
+        self._ui.sceneviewer_widget.register_handler(self._rectangle_tool)
+        self._ui.sceneviewer_widget.register_key_listener(QtCore.Qt.Key_Return, self._define_roi_button_clicked)
 
     def _leave_define_roi(self):
         rectangle_description = self._rectangle_tool.get_rectangle_box_description()
@@ -155,6 +163,10 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
             QtGui.QMessageBox.warning(self, 'Invalid ROI', 'The region of interest is invalid and region'
                                       ' analysis will not be performed')
         else:
+            self._rectangle_tool.remove_rectangle_box()
+            self._ui.sceneviewer_widget.unregister_handler(self._rectangle_tool)
+            self._ui.sceneviewer_widget.unregister_key_listener(QtCore.Qt.Key_Return)
+
             x = rectangle_description[0]
             y = rectangle_description[1]
             QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
@@ -162,31 +174,27 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
             QtGui.QApplication.restoreOverrideCursor()
             if element.isValid():
                 QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
-                image_roi = self._image_plane_model.convert_to_image_roi(
-                    self._ui.sceneviewer_widget.get_zinc_sceneviewer(), element, rectangle_description)
                 image_index = self._ui.frameIndex_spinBox.value() - 1
-                key_points = self._image_plane_model.analyse_roi(image_index, image_roi)
-                self._tracking_points_model.create_key_points(key_points)
+                self._tracking_tool.analyse_roi(
+                    image_index, self._ui.sceneviewer_widget.get_zinc_sceneviewer(), element, rectangle_description)
                 QtGui.QApplication.restoreOverrideCursor()
             else:
                 QtGui.QMessageBox.warning(self, 'Invalid ROI', 'The region of interest is invalid and region'
                                           ' analysis will not be performed')
 
-        self._rectangle_tool.remove_rectangle_box()
-        self._ui.sceneviewer_widget.unregister_handler(self._rectangle_tool)
-        self._ui.sceneviewer_widget.unregister_key_listener(QtCore.Qt.Key_Return)
-
-    def _enter_define_roi(self):
-        self._ui.sceneviewer_widget.register_handler(self._rectangle_tool)
-        self._ui.sceneviewer_widget.register_key_listener(QtCore.Qt.Key_Return, self._define_roi_button_clicked)
-
     def _enter_set_initial_tracking_points(self):
         self._ui.sceneviewer_widget.register_handler(self._data_point_adder)
         self._ui.sceneviewer_widget.register_handler(self._data_point_remover)
+        self._ui.sceneviewer_widget.register_key_listener(QtCore.Qt.Key_Return,
+                                                          self._set_initial_tracking_points_button_clicked)
 
     def _leave_set_initial_tracking_points(self):
         self._ui.sceneviewer_widget.unregister_handler(self._data_point_adder)
         self._ui.sceneviewer_widget.unregister_handler(self._data_point_remover)
+        self._ui.sceneviewer_widget.unregister_key_listener(QtCore.Qt.Key_Return)
+
+        # Perform the tracking for all images.
+        self._tracking_tool.track_key_points()
 
     def _enter_finalise_tracking_points(self):
         pass
