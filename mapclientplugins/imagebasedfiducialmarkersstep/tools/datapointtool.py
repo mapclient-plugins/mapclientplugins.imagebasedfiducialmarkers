@@ -13,7 +13,7 @@ class DataPointTool(object):
         :return:
         """
         location = self._plane_model.get_intersection_point(ray)
-        return self._points_model.create_node(location)
+        return self._points_model.create_segmented_key_point(location)
 
     def select_node(self, node_identifier):
         self._points_model.select_node(node_identifier)

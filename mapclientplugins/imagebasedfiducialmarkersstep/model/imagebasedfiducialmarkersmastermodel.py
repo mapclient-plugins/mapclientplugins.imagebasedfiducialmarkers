@@ -80,6 +80,13 @@ class ImageBasedFiducialMarkersMasterModel(object):
         frame_index = self._image_plane_model.get_frame_index_for_time(time, self._settings['frames-per-second']) + 1
         self._frame_index_update(frame_index)
 
+    def get_time_sequence(self):
+        time_sequence = []
+        for frame_value in range(self._image_plane_model.get_frame_count()):
+            time = self._image_plane_model.get_time_for_frame_index(frame_value, self._settings['frames-per-second'])
+            time_sequence.append(time)
+        return time_sequence
+
     def set_frames_per_second(self, value):
         self._settings['frames-per-second'] = value
 

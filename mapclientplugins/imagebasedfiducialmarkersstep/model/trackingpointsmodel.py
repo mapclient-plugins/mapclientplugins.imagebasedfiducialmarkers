@@ -1,14 +1,40 @@
 
-from opencmiss.utils.zinc import createFiniteElementField, createNodes, createNode
+from opencmiss.zinc.status import OK as CMISS_OK
+from opencmiss.utils.zinc import create_finite_element_field, create_node, AbstractNodeDataObject
 
 
-class NodeCreator(object):
+class NodeCreator(AbstractNodeDataObject):
 
     def __init__(self, coordinates):
+        super(NodeCreator, self).__init__(['coordinates'])
         self._coordinates = coordinates
 
     def coordinates(self):
         return self._coordinates
+
+
+class KeyPoint(object):
+
+    def __init__(self, node, time):
+        self._node = node
+        self._creation_time = time
+
+    def get_creation_time(self):
+        return self._creation_time
+
+    def get_node(self):
+        return self._node
+
+    def has_node(self, node):
+        return node.getIdentifier() == self._node.getIdentifier()
+
+
+class ElectrodeKeyPoint(KeyPoint):
+    pass
+
+
+class SegmentedKeyPoint(KeyPoint):
+    pass
 
 
 class TrackingPointsModel(object):
@@ -19,7 +45,7 @@ class TrackingPointsModel(object):
         self._coordinate_field = None
         self._selection_group = None
         self._selection_group_field = None
-        self._data_points = []
+        self._key_points = []
 
     def get_region(self):
         return self._region
@@ -28,27 +54,27 @@ class TrackingPointsModel(object):
         return self._coordinate_field
 
     def select_node(self, identifier):
-        node = self.get_node(identifier)
+        node = self._get_node(identifier)
         self._selection_group.removeAllNodes()
         self._selection_group.addNode(node)
 
     def deselect_node(self, identifier):
-        node = self.get_node(identifier)
+        node = self._get_node(identifier)
         self._selection_group.removeNode(node)
 
     def is_selected(self, identifier):
-        node = self.get_node(identifier)
+        node = self._get_node(identifier)
         return self._selection_group.containsNode(node)
 
-    def create_node(self, location):
-        time = self._master_model.get_timekeeper_time()
+    def _create_node(self, location, time):
         field_module = self._coordinate_field.getFieldmodule()
-        identifier = createNode(field_module, ['coordinates'], NodeCreator(location), node_set_name='datapoints', time=time)
-        node = self.get_node(identifier)
-        self._selection_group.removeAllNodes()
-        self._selection_group.addNode(node)
+        node_creator = NodeCreator(location)
+        node_creator.set_time_sequence(self._master_model.get_time_sequence())
+        node_creator.set_time_sequence_field_names(['coordinates'])
+        identifier = create_node(field_module, node_creator,
+                                node_set_name='datapoints', time=time)
 
-        return node
+        return self._get_node(identifier)
 
     def set_node_location(self, node, location):
         time = self._master_model.get_timekeeper_time()
@@ -61,33 +87,61 @@ class TrackingPointsModel(object):
         field_module.endChange()
 
     def remove_node(self, identifier):
-        node = self.get_node(identifier)
+        node = self._get_node(identifier)
+        key_points = [point for point in self._key_points if point.has_node(node)]
+        key_point_index = self._key_points.index(key_points[0])
+        self._key_points.pop(key_point_index)
         node_set = node.getNodeset()
         node_set.destroyNode(node)
 
-    def get_node(self, identifier):
+    def _get_node(self, identifier):
         node_set = self._selection_group.getMasterNodeset()
         return node_set.findNodeByIdentifier(identifier)
 
     def get_selection_field(self):
         return self._selection_group_field
 
-    def create_key_points(self, key_points):
+    def create_segmented_key_point(self, location):
         time = self._master_model.get_timekeeper_time()
-        key_points_coordinates = [[float(key_point[0]), float(key_point[1]), 0.0] for key_point in key_points]
-        createNodes(self._coordinate_field, key_points_coordinates, node_set_name='datapoints', time=time)
+        node = self._create_node(location, time)
+        self.select_node(node.getIdentifier())
+        self._key_points.append(SegmentedKeyPoint(node, time))
+
+    def create_electrode_key_points(self, key_points):
+        time = self._master_model.get_timekeeper_time()
+        field_module = self._coordinate_field.getFieldmodule()
+        field_module.beginChange()
+        for key_point in key_points:
+            node = self._create_node([float(key_point[0]), float(key_point[1]), 0.0], time)
+            self._key_points.append(ElectrodeKeyPoint(node, time))
+        field_module.endChange()
+
+    def set_key_points_at_time(self, key_points, time):
+        assert len(key_points) == len(self._key_points)
+        field_module = self._coordinate_field.getFieldmodule()
+        field_module.beginChange()
+        field_cache = field_module.createFieldcache()
+        field_cache.setTime(time)
+        for index, key_point in enumerate(self._key_points):
+            node = key_point.get_node()
+            coordinates = [key_points[index][0], key_points[index][1], 0.0]
+            field_cache.setNode(node)
+            self._coordinate_field.assignReal(field_cache, coordinates)
+
+        field_module.endChange()
 
     def get_key_points(self):
         key_points = []
-        field_module = self._region.getFieldmodule()
+        field_module = self._coordinate_field.getFieldmodule()
         field_cache = field_module.createFieldcache()
-        node_set = field_module.findNodesetByName('datapoints')
-        node_set_iterator = node_set.createNodeiterator()
-        node = node_set_iterator.next()
-        while node and node.isValid():
-            coords = self._coordinate_field.evaluateReal(field_cache, 3)
-            print(coords)
-            node = node_set_iterator.next()
+        for key_point in self._key_points:
+            node = key_point.get_node()
+            field_cache.setNode(node)
+            time = key_point.get_creation_time()
+            field_cache.setTime(time)
+            result, coordinates = self._coordinate_field.evaluateReal(field_cache, 3)
+            if result == CMISS_OK:
+                key_points.append(coordinates)
 
         return key_points
 
@@ -97,7 +151,7 @@ class TrackingPointsModel(object):
             default_region.removeChild(self._region)
 
         self._region = default_region.createChild('tracking')
-        self._coordinate_field = createFiniteElementField(self._region)
+        self._coordinate_field = create_finite_element_field(self._region)
 
         field_module = self._region.getFieldmodule()
         field_module.beginChange()

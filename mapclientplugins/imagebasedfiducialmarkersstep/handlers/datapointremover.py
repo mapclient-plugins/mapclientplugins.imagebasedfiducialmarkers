@@ -1,4 +1,4 @@
-from opencmiss.zinc.sceneviewerinput import Sceneviewerinput
+
 from opencmiss.zinchandlers.keyactivatedhandler import KeyActivatedHandler
 
 
@@ -49,8 +49,8 @@ class DataPointRemover(KeyActivatedHandler):
 
     def mouse_release_event(self, event):
         super(DataPointRemover, self).mouse_release_event(event)
-        node_identifier = self._active_node.getIdentifier()
-        if self._processing_mouse_events and self._active_node and self._model.is_selected(node_identifier):
-            self._model.remove_node(node_identifier)
-            self._active_node = None
-
+        if self._processing_mouse_events and self._active_node:
+            node_identifier = self._active_node.getIdentifier()
+            if self._model.is_selected(node_identifier):
+                self._model.remove_node(node_identifier)
+                self._active_node = None

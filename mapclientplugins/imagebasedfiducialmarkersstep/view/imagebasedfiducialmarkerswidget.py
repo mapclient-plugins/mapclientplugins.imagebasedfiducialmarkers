@@ -37,7 +37,7 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
         tracking_points_model = model.get_tracking_points_model()
 
         self._data_point_tool = DataPointTool(tracking_points_model, self._image_plane_model)
-        self._tracking_tool = TrackingTool(tracking_points_model, self._image_plane_model)
+        self._tracking_tool = TrackingTool(model)
 
         self._setup_handlers()
         self._set_initial_ui_state()
@@ -194,13 +194,17 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
         self._ui.sceneviewer_widget.unregister_key_listener(QtCore.Qt.Key_Return)
 
         # Perform the tracking for all images.
+        QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         self._tracking_tool.track_key_points()
+        QtGui.QApplication.restoreOverrideCursor()
 
     def _enter_finalise_tracking_points(self):
-        pass
+        self._ui.sceneviewer_widget.register_handler(self._data_point_adder)
+        self._ui.sceneviewer_widget.register_handler(self._data_point_remover)
 
     def _leave_finalise_tracking_points(self):
-        pass
+        self._ui.sceneviewer_widget.unregister_handler(self._data_point_adder)
+        self._ui.sceneviewer_widget.unregister_handler(self._data_point_remover)
 
     def _view_all(self):
         if self._ui.sceneviewer_widget.get_zinc_sceneviewer() is not None:
