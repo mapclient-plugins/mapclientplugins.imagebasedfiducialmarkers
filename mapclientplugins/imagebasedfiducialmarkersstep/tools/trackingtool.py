@@ -22,6 +22,9 @@ class TrackingTool(object):
     def track_key_points(self):
         key_points = self._tracking_points_model.get_key_points()
         if len(key_points):
+            coordinate_field = self._tracking_points_model.get_coordinate_field()
+            field_module = coordinate_field.getFieldmodule()
+            field_module.beginChange()
             image_points = self._image_plane_model.convert_to_image_coordinates(key_points)
             numpy_points = np.asarray(image_points, dtype=np.float32)
             number_of_images = self._image_plane_model.get_number_of_images()
@@ -41,6 +44,8 @@ class TrackingTool(object):
                 numpy_points = new_numpy_points
                 previous_gray_image = current_gray_image
                 image_index += 1
+
+            field_module.endChange()
 
     def analyse_roi(self, image_index, zinc_sceneviewer, element, rectangle_description):
         image_roi = self._convert_to_image_roi(zinc_sceneviewer, element, rectangle_description)
