@@ -1,3 +1,4 @@
+from __future__ import division
 
 import get_image_size
 
