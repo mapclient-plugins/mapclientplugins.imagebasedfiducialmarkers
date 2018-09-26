@@ -1,5 +1,5 @@
+
 import numpy as np
-import cv2
 
 from sparc.videotracking.processing import Processing
 from sparc.videotracking.lkopticalflow import LKOpticalFlow
@@ -22,6 +22,9 @@ class TrackingTool(object):
     def track_key_points(self):
         key_points = self._tracking_points_model.get_key_points()
         if len(key_points):
+            if self._key_index == -1:
+                # Have to at least analyse something to set up the mask in the processor.
+                self._analyse_roi(0, (0, 0, 1, 1))
             coordinate_field = self._tracking_points_model.get_coordinate_field()
             field_module = coordinate_field.getFieldmodule()
             field_module.beginChange()
