@@ -74,6 +74,7 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
         with open(self._get_settings_file_name(), 'w') as f:
             f.write(settings_in_string_form)
 
+        self._portData0 = self._model.get_tracking_points_model().get_key_points_description()
         self._view = None
         self._model = None
         self._doneExecution()
@@ -100,7 +101,7 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
 
         :param index: Index of the port to return.
         """
-        return self._portData0 # fiducial_marker_data
+        return self._portData0  # fiducial_marker_data
 
     def configure(self):
         """
