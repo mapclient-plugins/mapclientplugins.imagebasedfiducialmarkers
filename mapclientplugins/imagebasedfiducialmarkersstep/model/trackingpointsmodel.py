@@ -18,6 +18,7 @@ class KeyPoint(object):
     def __init__(self, node, time):
         self._node = node
         self._creation_time = time
+        self._label = '%s' % self._node.getIdentifier()
 
     def get_creation_time(self):
         return self._creation_time
@@ -27,6 +28,9 @@ class KeyPoint(object):
 
     def has_node(self, node):
         return node.getIdentifier() == self._node.getIdentifier()
+
+    def get_label(self):
+        return self._label
 
 
 class ElectrodeKeyPoint(KeyPoint):
@@ -72,7 +76,7 @@ class TrackingPointsModel(object):
         node_creator.set_time_sequence(self._master_model.get_time_sequence())
         node_creator.set_time_sequence_field_names(['coordinates'])
         identifier = create_node(field_module, node_creator,
-                                node_set_name='datapoints', time=time)
+                                 node_set_name='datapoints', time=time)
 
         return self._get_node(identifier)
 
@@ -85,6 +89,29 @@ class TrackingPointsModel(object):
         field_cache.setNode(node)
         self._coordinate_field.assignReal(field_cache, location)
         field_module.endChange()
+
+    def get_key_points_description(self):
+        description = {}
+
+        time_array = self._master_model.get_time_sequence()
+        description['time_array'] = time_array
+
+        field_module = self._coordinate_field.getFieldmodule()
+        field_module.beginChange()
+        field_cache = field_module.createFieldcache()
+        for key_point in self._key_points:
+            node = key_point.get_node()
+            field_cache.setNode(node)
+            node_locations = []
+            for time in time_array:
+                field_cache.setTime(time)
+                _, coordinates = self._coordinate_field.evaluateReal(field_cache, 3)
+
+                node_locations.append(coordinates)
+
+            description[key_point.get_label()] = node_locations
+
+        return description
 
     def remove_node(self, identifier):
         node = self._get_node(identifier)
