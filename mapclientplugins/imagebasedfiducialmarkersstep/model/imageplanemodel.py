@@ -14,6 +14,7 @@ class ImagePlaneModel(object):
         self._region = None
         self._frame_count = -1
         self._scale_field = None
+        self._duration_field = None
         self._image_based_material = None
         self._scaled_coordinate_field = None
         self._images_info = None
@@ -81,12 +82,21 @@ class ImagePlaneModel(object):
             if width != -1 or height != -1:
                 cache = field_module.createFieldcache()
                 self._scale_field.assignReal(cache, [width, height, 1.0])
+                frames_per_second = self._master_model.get_frames_per_second()
+                duration = self._frame_count / frames_per_second
+                self._duration_field.assignReal(cache, duration)
                 self._image_dimensions = [width, height]
             image_field = create_volume_image_field(field_module, images)
             self._image_based_material = create_material_using_image_field(self._region, image_field)
 
     def get_frame_count(self):
         return self._frame_count
+
+    def set_duration_value(self, frames_per_second):
+        field_module = self._region.getFieldmodule()
+        cache = field_module.createFieldcache()
+        duration = self._frame_count / frames_per_second
+        self._duration_field.assignReal(cache, duration)
 
     def get_time_for_frame_index(self, index, frames_per_second):
         duration = self._frame_count / frames_per_second
@@ -104,6 +114,9 @@ class ImagePlaneModel(object):
     def get_material(self):
         return self._image_based_material
 
+    def get_duration_field(self):
+        return self._duration_field
+
     def get_coordinate_field(self):
         return self._scaled_coordinate_field
 
@@ -119,6 +132,7 @@ class ImagePlaneModel(object):
         coordinate_field = create_finite_element_field(self._region)
         field_module = self._region.getFieldmodule()
         self._scale_field = field_module.createFieldConstant([2, 3, 1])
+        self._duration_field = field_module.createFieldConstant(1.0)
         offset_field = field_module.createFieldConstant([+0.5, +0.5, 0.0])
         scaled_coordinate_field = field_module.createFieldMultiply(self._scale_field, coordinate_field)
         self._scaled_coordinate_field = field_module.createFieldAdd(scaled_coordinate_field, offset_field)

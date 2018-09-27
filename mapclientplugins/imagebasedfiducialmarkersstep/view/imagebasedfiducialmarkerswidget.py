@@ -152,7 +152,6 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
         self._data_point_remover = DataPointRemover(QtCore.Qt.Key_D)
         self._data_point_remover.set_model(self._data_point_tool)
 
-
     def _enter_define_roi(self):
         self._ui.sceneviewer_widget.register_handler(self._rectangle_tool)
         self._ui.sceneviewer_widget.register_key_listener(QtCore.Qt.Key_Return, self._define_roi_button_clicked)
@@ -225,9 +224,11 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
         self._image_plane_model.load_images(images_info)
         self._image_plane_scene.set_image_material()
         frame_count = self._image_plane_model.get_frame_count()
-        self._ui.frameIndex_spinBox.setMaximum(frame_count + 1)
         value = self._model.get_frames_per_second()
-        self._ui.timeValue_doubleSpinBox.setMaximum(frame_count / value)
+        duration = frame_count / value
+        self._ui.frameIndex_spinBox.setMaximum(frame_count)
+        self._ui.timeValue_doubleSpinBox.setMaximum(duration)
+        self._model.set_maximum_time_value(duration)
         self._ui.numFramesValue_label.setText("%d" % frame_count)
         self._model.set_frame_index(1)
 

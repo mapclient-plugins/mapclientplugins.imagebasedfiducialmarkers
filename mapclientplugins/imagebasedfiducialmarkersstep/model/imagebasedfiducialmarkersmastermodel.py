@@ -50,19 +50,11 @@ class ImageBasedFiducialMarkersMasterModel(object):
         if self._settings['time-loop'] and self._current_time > duration:
             self._current_time -= duration
 
-        self._timekeeper.setTime(self._scale_current_time_to_timekeeper_time())
+        self._timekeeper.setTime(self._current_time)
         self._time_value_update(self._current_time)
         frame_index = self._image_plane_model.get_frame_index_for_time(self._current_time,
                                                                        self._settings['frames-per-second']) + 1
         self._frame_index_update(frame_index)
-
-    def _scale_current_time_to_timekeeper_time(self):
-        scaled_time = 0.0
-        duration = self._image_plane_model.get_frame_count() / self._settings['frames-per-second']
-        if duration > 0:
-            scaled_time = self._current_time / duration
-
-        return scaled_time
 
     def register_frame_index_update_callback(self, frame_index_update_callback):
         self._frame_index_update = frame_index_update_callback
@@ -73,12 +65,12 @@ class ImageBasedFiducialMarkersMasterModel(object):
     def set_frame_index(self, frame_index):
         frame_value = frame_index - 1
         self._current_time = self._image_plane_model.get_time_for_frame_index(frame_value, self._settings['frames-per-second'])
-        self._timekeeper.setTime(self._scale_current_time_to_timekeeper_time())
+        self._timekeeper.setTime(self._current_time)
         self._time_value_update(self._current_time)
 
     def set_time_value(self, time):
         self._current_time = time
-        self._timekeeper.setTime(self._scale_current_time_to_timekeeper_time())
+        self._timekeeper.setTime(time)
         frame_index = self._image_plane_model.get_frame_index_for_time(time, self._settings['frames-per-second']) + 1
         self._frame_index_update(frame_index)
 
@@ -87,10 +79,12 @@ class ImageBasedFiducialMarkersMasterModel(object):
         for frame_value in range(self._image_plane_model.get_frame_count()):
             time = self._image_plane_model.get_time_for_frame_index(frame_value, self._settings['frames-per-second'])
             time_sequence.append(time)
+
         return time_sequence
 
     def set_frames_per_second(self, value):
         self._settings['frames-per-second'] = value
+        self._image_plane_model.set_duration_value(value)
 
     def get_frames_per_second(self):
         return self._settings['frames-per-second']
@@ -124,6 +118,9 @@ class ImageBasedFiducialMarkersMasterModel(object):
 
     def get_timekeeper_time(self):
         return self._timekeeper.getTime()
+
+    def set_maximum_time_value(self, maximum_time_value):
+        self._timekeeper.setMaximumTime(maximum_time_value)
 
     def set_time(self, value):
         pass
