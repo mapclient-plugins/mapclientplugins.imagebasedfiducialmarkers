@@ -5,6 +5,7 @@ from opencmiss.utils.zinc import defineStandardVisualisationTools
 
 from opencmiss.zinc.context import Context
 
+from mapclientplugins.imagebasedfiducialmarkersstep.model.imagecontextdata import ImageContextData
 from mapclientplugins.imagebasedfiducialmarkersstep.model.imageplanemodel import ImagePlaneModel
 from mapclientplugins.imagebasedfiducialmarkersstep.model.trackingpointsmodel import TrackingPointsModel
 from mapclientplugins.imagebasedfiducialmarkersstep.scene.imageplanescene import ImagePlaneScene
@@ -148,3 +149,11 @@ class ImageBasedFiducialMarkersMasterModel(object):
 
     def get_settings(self):
         return self._settings
+
+    def get_image_context_data(self):
+        # Destroy some of the context leaving only the image part.
+        frames_per_second = self._settings['frames-per-second']
+        frame_count = self._image_plane_model.get_frame_count()
+        image_context_data = ImageContextData(self._context, frames_per_second, frame_count)
+
+        return image_context_data

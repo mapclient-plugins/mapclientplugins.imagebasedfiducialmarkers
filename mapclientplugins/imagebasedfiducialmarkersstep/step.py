@@ -30,12 +30,16 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
         # Ports:
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#provides',
-                      'fiducial_marker_data'))
+                      'http://physiomeproject.org/workflow/1.0/rdf-schema#image_context_data'))
+        self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
+                      'http://physiomeproject.org/workflow/1.0/rdf-schema#provides',
+                      'http://physiomeproject.org/workflow/1.0/rdf-schema#time_labelled_fiducial_marker_locations'))
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#uses',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#images'))
         # Port data:
-        self._portData0 = None # fiducial_marker_data
+        self._image_context_data = None
+        self._fidcial_marker_data = None # fiducial_marker_data
         self._images_info = None # http://physiomeproject.org/workflow/1.0/rdf-schema#images
         # Config:
         self._config = {'identifier': ''}
@@ -74,7 +78,8 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
         with open(self._get_settings_file_name(), 'w') as f:
             f.write(settings_in_string_form)
 
-        self._portData0 = self._model.get_tracking_points_model().get_key_points_description()
+        self._fidcial_marker_data = self._model.get_tracking_points_model().get_key_points_description()
+        self._image_context_data = self._model.get_image_context_data()
         self._view = None
         self._model = None
         self._doneExecution()
@@ -101,7 +106,13 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
 
         :param index: Index of the port to return.
         """
-        return self._portData0  # fiducial_marker_data
+        port_data = None
+        if index == 0:
+            port_data = self._image_context_data
+        elif index == 1:
+            port_data = self._fidcial_marker_data
+
+        return port_data
 
     def configure(self):
         """

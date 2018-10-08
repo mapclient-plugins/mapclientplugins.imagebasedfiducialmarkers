@@ -238,7 +238,6 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
         max_time_value = frame_count / self._ui.framesPerSecond_spinBox.value()
 
         if value > max_time_value:
-            print(value, max_time_value)
             self._ui.timeValue_doubleSpinBox.setValue(max_time_value)
             self._time_play_stop_clicked()
         else:
