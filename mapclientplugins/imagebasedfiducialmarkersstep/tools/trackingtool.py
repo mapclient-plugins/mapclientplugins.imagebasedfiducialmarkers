@@ -30,12 +30,11 @@ class TrackingTool(object):
             field_module.beginChange()
             image_points = self._image_plane_model.convert_to_image_coordinates(key_points)
             numpy_points = np.asarray(image_points, dtype=np.float32)
-            number_of_images = self._image_plane_model.get_number_of_images()
-            frames_per_second = self._master_model.get_frames_per_second()
+            number_of_images = self._image_plane_model.get_frame_count()
             previous_gray_image = self._processor.get_gray_image()
             image_index = self._key_index
             while image_index < number_of_images:
-                time = self._image_plane_model.get_time_for_frame_index(image_index, frames_per_second)
+                time = self._image_plane_model.get_time_for_frame_index(image_index)
                 file_name = self._image_plane_model.get_image_file_name_at(image_index)
                 self._process_image(file_name)
                 current_gray_image = self._processor.get_gray_image()
@@ -56,6 +55,9 @@ class TrackingTool(object):
         image_points = [key_point.pt for key_point in image_key_points]
         key_points = self._image_plane_model.convert_to_model_coordinates(image_points)
         self._tracking_points_model.create_electrode_key_points(key_points)
+
+    def count(self):
+        return self._tracking_points_model.count()
 
     def _process_image(self, file_name):
         self._processor.read_image(file_name)

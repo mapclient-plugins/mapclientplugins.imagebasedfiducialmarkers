@@ -57,6 +57,9 @@ class TrackingPointsModel(object):
     def get_coordinate_field(self):
         return self._coordinate_field
 
+    def count(self):
+        return len(self._key_points)
+
     def select_node(self, identifier):
         node = self._get_node(identifier)
         self._selection_group.removeAllNodes()
@@ -153,7 +156,10 @@ class TrackingPointsModel(object):
             node = key_point.get_node()
             coordinates = [key_points[index][0], key_points[index][1], 0.0]
             field_cache.setNode(node)
-            self._coordinate_field.assignReal(field_cache, coordinates)
+            result = self._coordinate_field.assignReal(field_cache, coordinates)
+            if index == 1:
+                print(time, key_points[index][0], key_points[index][1], result)
+
 
         field_module.endChange()
 
