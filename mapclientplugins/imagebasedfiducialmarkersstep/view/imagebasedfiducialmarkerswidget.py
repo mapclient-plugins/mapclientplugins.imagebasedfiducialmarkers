@@ -105,7 +105,8 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
     def _track_button_clicked(self):
         if self._tracking_tool.count():
             QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
-            self._tracking_tool.track_key_points()
+            frame_index = self._ui.frameIndex_spinBox.value()
+            self._tracking_tool.track_key_points(frame_index)
             QtGui.QApplication.restoreOverrideCursor()
 
     def _setup_handlers(self):

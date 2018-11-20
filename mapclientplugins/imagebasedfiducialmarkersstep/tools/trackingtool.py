@@ -19,20 +19,20 @@ class TrackingTool(object):
         self._object_tracker = LKOpticalFlow(win=(20, 20), max_level=2)
         self._key_index = -1
 
-    def track_key_points(self):
+    def track_key_points(self, start_index):
         key_points = self._tracking_points_model.get_key_points()
         if len(key_points):
-            if self._key_index == -1:
-                # Have to at least analyse something to set up the mask in the processor.
-                self._analyse_roi(0, (0, 0, 1, 1))
             coordinate_field = self._tracking_points_model.get_coordinate_field()
             field_module = coordinate_field.getFieldmodule()
             field_module.beginChange()
             image_points = self._image_plane_model.convert_to_image_coordinates(key_points)
             numpy_points = np.asarray(image_points, dtype=np.float32)
             number_of_images = self._image_plane_model.get_frame_count()
+
+            image_index = start_index
+            file_name = self._image_plane_model.get_image_file_name_at(image_index)
+            self._process_image(file_name)
             previous_gray_image = self._processor.get_gray_image()
-            image_index = self._key_index
             while image_index < number_of_images:
                 time = self._image_plane_model.get_time_for_frame_index(image_index)
                 file_name = self._image_plane_model.get_image_file_name_at(image_index)
@@ -49,51 +49,12 @@ class TrackingTool(object):
 
             field_module.endChange()
 
-    def analyse_roi(self, image_index, zinc_sceneviewer, element, rectangle_description):
-        image_roi = self._convert_to_image_roi(zinc_sceneviewer, element, rectangle_description)
-        image_key_points = self._analyse_roi(image_index, image_roi)
-        image_points = [key_point.pt for key_point in image_key_points]
-        key_points = self._image_plane_model.convert_to_model_coordinates(image_points)
-        self._tracking_points_model.create_electrode_key_points(key_points)
-
     def count(self):
         return self._tracking_points_model.count()
 
     def _process_image(self, file_name):
         self._processor.read_image(file_name)
-        self._processor.filter_and_threshold()
-
-    def _analyse_roi(self, image_index, image_roi):
-        self._key_index = image_index
-        file_name = self._image_plane_model.get_image_file_name_at(image_index)
-        self._process_image(file_name)
-        self._processor.mask_and_image(image_roi)
-        image_points, dst = self._processor.feature_detect()
-
-        return image_points
-
-    def _convert_to_image_roi(self, scene_viewer, element, rectangle_description):
-        """
-        Return a description of the rectangle in image pixels.  The resulting description is [top left corner x and y,
-        width, height].  E.g. (1, 0, 48, 140).
-
-        :param scene_viewer:
-        :param element:
-        :param rectangle_description: top left and bottom right corners of the rectangle in NDC top left coordinates.
-        :return: A tuple in image pixels (x, y, width, height) describing a rectangle.
-        """
-        x1 = rectangle_description[0]
-        y1 = rectangle_description[1]
-        x2 = rectangle_description[2]
-        y2 = rectangle_description[3]
-        coordinate_field = self._image_plane_model.get_coordinate_field()
-        top_left_mesh_location = _determine_the_mesh_location(
-            scene_viewer, x1, y1, element, coordinate_field)
-        bottom_right_mesh_location = _determine_the_mesh_location(
-            scene_viewer, x2, y2, element, coordinate_field)
-
-        return self._image_plane_model.calculate_image_pixels_rectangle(top_left_mesh_location,
-                                                                        bottom_right_mesh_location)
+        self._processor.rgb_and_blur_and_hsv(threshold=9)
 
 
 def _determine_the_mesh_location(scene_viewer, x, y, element, coordinate_field):
