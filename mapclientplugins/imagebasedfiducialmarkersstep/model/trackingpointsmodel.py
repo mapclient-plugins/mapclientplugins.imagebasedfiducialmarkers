@@ -156,10 +156,7 @@ class TrackingPointsModel(object):
             node = key_point.get_node()
             coordinates = [key_points[index][0], key_points[index][1], 0.0]
             field_cache.setNode(node)
-            result = self._coordinate_field.assignReal(field_cache, coordinates)
-            if index == 1:
-                print(time, key_points[index][0], key_points[index][1], result)
-
+            self._coordinate_field.assignReal(field_cache, coordinates)
 
         field_module.endChange()
 
