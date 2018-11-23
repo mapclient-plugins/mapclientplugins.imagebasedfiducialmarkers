@@ -76,6 +76,7 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
             f.write(settings_in_string_form)
 
         self._fiducial_marker_data = self._model.get_tracking_points_model().get_key_points_description()
+        self._model.clear_tracking_points_model()
         self._view = None
         self._model = None
         self._doneExecution()

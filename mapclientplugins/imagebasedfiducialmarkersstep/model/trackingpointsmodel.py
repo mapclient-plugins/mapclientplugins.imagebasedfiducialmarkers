@@ -176,9 +176,8 @@ class TrackingPointsModel(object):
         return key_points
 
     def create_model(self):
+        self.clear()
         default_region = self._master_model.get_default_region()
-        if self._region is not None:
-            default_region.removeChild(self._region)
 
         self._region = default_region.createChild('tracking')
         self._coordinate_field = create_finite_element_field(self._region)
@@ -192,3 +191,8 @@ class TrackingPointsModel(object):
         selection_group = self._selection_group_field.createFieldNodeGroup(node_set)
         self._selection_group = selection_group.getNodesetGroup()
         field_module.endChange()
+
+    def clear(self):
+        default_region = self._master_model.get_default_region()
+        if self._region is not None:
+            default_region.removeChild(self._region)
