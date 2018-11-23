@@ -10,7 +10,7 @@
 from PySide import QtCore, QtGui
 
 class Ui_ImageBasedFiducialMarkersWidget(object):
-    def setupUi(self, ImageBasedFiducialMarkersWidget):
+    def setupUi(self, shared_open_gl_widget, ImageBasedFiducialMarkersWidget):
         ImageBasedFiducialMarkersWidget.setObjectName("ImageBasedFiducialMarkersWidget")
         ImageBasedFiducialMarkersWidget.resize(870, 576)
         self.horizontalLayout = QtGui.QHBoxLayout(ImageBasedFiducialMarkersWidget)
@@ -112,7 +112,7 @@ class Ui_ImageBasedFiducialMarkersWidget(object):
         self.horizontalLayout_2.addItem(spacerItem2)
         self.verticalLayout.addWidget(self.frame)
         self.horizontalLayout.addWidget(self.controlPanel_groupBox)
-        self.sceneviewer_widget = BaseSceneviewerWidget(ImageBasedFiducialMarkersWidget)
+        self.sceneviewer_widget = BaseSceneviewerWidget(ImageBasedFiducialMarkersWidget, shared_open_gl_widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(1)
         sizePolicy.setVerticalStretch(0)
@@ -140,5 +140,6 @@ class Ui_ImageBasedFiducialMarkersWidget(object):
         self.track_pushButton.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Track", None, QtGui.QApplication.UnicodeUTF8))
         self.statusText_label.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
         self.done_pushButton.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Done", None, QtGui.QApplication.UnicodeUTF8))
+
 
 from opencmiss.zincwidgets.basesceneviewerwidget import BaseSceneviewerWidget

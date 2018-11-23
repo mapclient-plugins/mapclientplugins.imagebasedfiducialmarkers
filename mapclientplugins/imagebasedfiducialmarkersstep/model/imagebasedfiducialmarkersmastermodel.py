@@ -17,6 +17,7 @@ class ImageBasedFiducialMarkersMasterModel(object):
         }
 
         self._context = image_context_data.get_context()
+        self._shareable_widget = image_context_data.get_shareable_open_gl_widget()
         defineStandardVisualisationTools(self._context)
         self._default_region = self._context.getDefaultRegion()
 
@@ -102,6 +103,9 @@ class ImageBasedFiducialMarkersMasterModel(object):
     def get_context(self):
         return self._context
 
+    def get_shareable_open_gl_widget(self):
+        return self._shareable_widget
+
     def get_default_region(self):
         return self._default_region
 
@@ -131,6 +135,9 @@ class ImageBasedFiducialMarkersMasterModel(object):
 
     def get_tracking_points_scene(self):
         return self._tracking_points_scene
+
+    def clear_tracking_points_model(self):
+        self._tracking_points_model.clear()
 
     def reset(self):
         self._tracking_points_model.create_model()

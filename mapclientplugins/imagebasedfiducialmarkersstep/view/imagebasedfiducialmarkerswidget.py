@@ -21,7 +21,7 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
     def __init__(self, model, parent=None):
         super(ImageBasedFiducialMarkersWidget, self).__init__(parent)
         self._ui = Ui_ImageBasedFiducialMarkersWidget()
-        self._ui.setupUi(self)
+        self._ui.setupUi(model.get_shareable_open_gl_widget(), self)
         self._ui.sceneviewer_widget.set_context(model.get_context())
 
         self._settings = {'view-parameters': {}}
