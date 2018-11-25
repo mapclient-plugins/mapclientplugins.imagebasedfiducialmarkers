@@ -4,8 +4,8 @@ from PySide import QtGui, QtCore
 from opencmiss.zinchandlers.scenemanipulation import SceneManipulation
 
 from mapclientplugins.imagebasedfiducialmarkersstep.handlers.datapointadder import DataPointAdder
+from mapclientplugins.imagebasedfiducialmarkersstep.handlers.datapointlabeller import DataPointLabeler
 from mapclientplugins.imagebasedfiducialmarkersstep.handlers.datapointremover import DataPointRemover
-from mapclientplugins.imagebasedfiducialmarkersstep.handlers.rectangletool import RectangleTool
 from mapclientplugins.imagebasedfiducialmarkersstep.static.strings import SET_TRACKING_POINTS_STRING
 from mapclientplugins.imagebasedfiducialmarkersstep.tools.datapointtool import DataPointTool
 from mapclientplugins.imagebasedfiducialmarkersstep.tools.trackingtool import TrackingTool
@@ -38,6 +38,7 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
         self._image_plane_model = model.get_image_plane_model()
         tracking_points_model = model.get_tracking_points_model()
         tracking_points_model.create_model()
+        tracking_points_model.set_context_menu_callback(self._show_context_menu)
         tracking_points_scene = model.get_tracking_points_scene()
         tracking_points_scene.create_graphics()
 
@@ -116,16 +117,20 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
         self._data_point_adder.set_model(self._data_point_tool)
         self._data_point_remover = DataPointRemover(QtCore.Qt.Key_D)
         self._data_point_remover.set_model(self._data_point_tool)
+        self._data_point_labeler = DataPointLabeler(QtCore.Qt.Key_E)
+        self._data_point_labeler.set_model(self._data_point_tool)
 
     def _enter_set_tracking_points(self):
         self._ui.sceneviewer_widget.register_handler(self._data_point_adder)
         self._ui.sceneviewer_widget.register_handler(self._data_point_remover)
+        self._ui.sceneviewer_widget.register_handler(self._data_point_labeler)
         self._ui.sceneviewer_widget.register_key_listener(
             QtCore.Qt.Key_Return, self._track_button_clicked)
 
     def _leave_set_tracking_points(self):
         self._ui.sceneviewer_widget.unregister_handler(self._data_point_adder)
         self._ui.sceneviewer_widget.unregister_handler(self._data_point_remover)
+        self._ui.sceneviewer_widget.unregister_handler(self._data_point_labeler)
         self._ui.sceneviewer_widget.unregister_key_listener(QtCore.Qt.Key_Return)
 
         # Perform the tracking for all images.
@@ -144,6 +149,26 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
     def _view_all(self):
         if self._ui.sceneviewer_widget.get_zinc_sceneviewer() is not None:
             self._ui.sceneviewer_widget.view_all()
+
+    def _add_labels_as_actions(self, menu, labels):
+        for label in labels:
+            label_action = QtGui.QAction(menu)
+            label_action.setText(label)
+            label_action.triggered.connect(self._label_clicked)
+            menu.addAction(label_action)
+
+    def _show_context_menu(self, x, y, used_labels, unused_labels):
+        menu = QtGui.QMenu(self._ui.sceneviewer_widget)
+
+        self._add_labels_as_actions(menu, unused_labels)
+        menu.addSeparator()
+        self._add_labels_as_actions(menu, used_labels)
+
+        menu.exec_(self.mapToGlobal(QtCore.QPoint(x, y) + self._ui.sceneviewer_widget.pos()))
+
+    def _label_clicked(self):
+        sender = self.sender()
+        print(sender.text())
 
     def register_done_callback(self, done_callback):
         self._done_callback = done_callback
