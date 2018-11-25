@@ -38,6 +38,7 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
         self.addPort(self._time_labelled_fiducial_marker_locations)
         # Port data:
         self._fiducial_marker_data = None # fiducial_marker_data
+        self._images_context_data = None
         # Config:
         self._config = {'identifier': ''}
         self._view = None
