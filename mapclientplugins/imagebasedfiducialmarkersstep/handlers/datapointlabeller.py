@@ -1,4 +1,3 @@
-
 from PySide2 import QtCore
 
 from opencmiss.zinchandlers.keyactivatedhandler import KeyActivatedHandler

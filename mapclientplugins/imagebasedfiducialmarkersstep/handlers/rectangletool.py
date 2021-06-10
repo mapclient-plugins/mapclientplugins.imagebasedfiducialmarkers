@@ -1,4 +1,3 @@
-
 from opencmiss.zinc.glyph import Glyph
 from opencmiss.zinc.scenecoordinatesystem import SCENECOORDINATESYSTEM_WINDOW_PIXEL_TOP_LEFT
 from opencmiss.zinchandlers.keyactivatedhandler import KeyActivatedHandler

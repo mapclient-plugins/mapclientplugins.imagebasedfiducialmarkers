@@ -1,4 +1,3 @@
-
 from opencmiss.zinc.status import OK as CMISS_OK
 from opencmiss.utils.zinc import create_finite_element_field, create_node, AbstractNodeDataObject
 
@@ -254,4 +253,3 @@ class TrackingPointsModel(object):
 
     def context_menu_requested(self, node_id, x, y):
         self._context_menu_callback(x, y, self._used_labels, self._unused_labels)
-

@@ -1,4 +1,3 @@
-
 from PySide2 import QtCore, QtWidgets
 
 from opencmiss.utils.zinc.handlers.scenemanipulation import SceneManipulation
@@ -9,7 +8,7 @@ from mapclientplugins.imagebasedfiducialmarkersstep.handlers.datapointremover im
 from mapclientplugins.imagebasedfiducialmarkersstep.static.strings import SET_TRACKING_POINTS_STRING
 from mapclientplugins.imagebasedfiducialmarkersstep.tools.datapointtool import DataPointTool
 from mapclientplugins.imagebasedfiducialmarkersstep.tools.trackingtool import TrackingTool
-from mapclientplugins.imagebasedfiducialmarkersstep.view.ui_imagebasedfiducialmarkerswidget\
+from mapclientplugins.imagebasedfiducialmarkersstep.view.ui_imagebasedfiducialmarkerswidget \
     import Ui_ImageBasedFiducialMarkersWidget
 
 PLAY_TEXT = 'Play'

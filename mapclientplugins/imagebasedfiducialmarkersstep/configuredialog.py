@@ -1,5 +1,3 @@
-
-
 from PySide2 import QtWidgets
 from mapclientplugins.imagebasedfiducialmarkersstep.ui_configuredialog import Ui_ConfigureDialog
 

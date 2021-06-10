@@ -1,5 +1,3 @@
-
-
 class ImagePlaneScene(object):
 
     def __init__(self, master_model):
