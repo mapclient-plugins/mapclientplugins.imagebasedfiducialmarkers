@@ -1,4 +1,4 @@
-from opencmiss.zinchandlers.keyactivatedhandler import KeyActivatedHandler
+from opencmiss.utils.zinc.handlers.keyactivatedhandler import KeyActivatedHandler
 
 
 class DataPointRemover(KeyActivatedHandler):
