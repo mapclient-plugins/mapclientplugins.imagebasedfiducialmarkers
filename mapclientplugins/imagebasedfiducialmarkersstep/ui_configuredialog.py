@@ -1,45 +1,61 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'mapclientplugins\imagebasedfiducialmarkersstep\qt\configuredialog.ui'
-#
-# Created: Fri Nov  2 14:00:33 2018
-#      by: pyside-uic 0.2.15 running on PySide 1.2.4
-#
-# WARNING! All changes made in this file will be lost!
+################################################################################
+## Form generated from reading UI file 'configuredialog.ui'
+##
+## Created by: Qt User Interface Compiler version 5.15.2
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
 
-from PySide import QtCore, QtGui
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
+
 
 class Ui_ConfigureDialog(object):
     def setupUi(self, ConfigureDialog):
-        ConfigureDialog.setObjectName("ConfigureDialog")
+        if not ConfigureDialog.objectName():
+            ConfigureDialog.setObjectName(u"ConfigureDialog")
         ConfigureDialog.resize(418, 303)
-        self.verticalLayout_2 = QtGui.QVBoxLayout(ConfigureDialog)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.configGroupBox = QtGui.QGroupBox(ConfigureDialog)
-        self.configGroupBox.setTitle("")
-        self.configGroupBox.setObjectName("configGroupBox")
-        self.formLayout = QtGui.QFormLayout(self.configGroupBox)
-        self.formLayout.setFieldGrowthPolicy(QtGui.QFormLayout.AllNonFixedFieldsGrow)
-        self.formLayout.setObjectName("formLayout")
-        self.identifier_label = QtGui.QLabel(self.configGroupBox)
-        self.identifier_label.setObjectName("identifier_label")
-        self.formLayout.setWidget(0, QtGui.QFormLayout.LabelRole, self.identifier_label)
-        self.identifier_lineEdit = QtGui.QLineEdit(self.configGroupBox)
-        self.identifier_lineEdit.setObjectName("identifier_lineEdit")
-        self.formLayout.setWidget(0, QtGui.QFormLayout.FieldRole, self.identifier_lineEdit)
+        self.verticalLayout_2 = QVBoxLayout(ConfigureDialog)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.configGroupBox = QGroupBox(ConfigureDialog)
+        self.configGroupBox.setObjectName(u"configGroupBox")
+        self.formLayout = QFormLayout(self.configGroupBox)
+        self.formLayout.setObjectName(u"formLayout")
+        self.formLayout.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
+        self.identifier_label = QLabel(self.configGroupBox)
+        self.identifier_label.setObjectName(u"identifier_label")
+
+        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.identifier_label)
+
+        self.identifier_lineEdit = QLineEdit(self.configGroupBox)
+        self.identifier_lineEdit.setObjectName(u"identifier_lineEdit")
+
+        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.identifier_lineEdit)
+
+
         self.verticalLayout_2.addWidget(self.configGroupBox)
-        self.buttonBox = QtGui.QDialogButtonBox(ConfigureDialog)
-        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
-        self.buttonBox.setObjectName("buttonBox")
+
+        self.buttonBox = QDialogButtonBox(ConfigureDialog)
+        self.buttonBox.setObjectName(u"buttonBox")
+        self.buttonBox.setOrientation(Qt.Horizontal)
+        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
+
         self.verticalLayout_2.addWidget(self.buttonBox)
 
+
         self.retranslateUi(ConfigureDialog)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), ConfigureDialog.accept)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), ConfigureDialog.reject)
-        QtCore.QMetaObject.connectSlotsByName(ConfigureDialog)
+        self.buttonBox.accepted.connect(ConfigureDialog.accept)
+        self.buttonBox.rejected.connect(ConfigureDialog.reject)
+
+        QMetaObject.connectSlotsByName(ConfigureDialog)
+    # setupUi
 
     def retranslateUi(self, ConfigureDialog):
-        ConfigureDialog.setWindowTitle(QtGui.QApplication.translate("ConfigureDialog", "Configure Step", None, QtGui.QApplication.UnicodeUTF8))
-        self.identifier_label.setText(QtGui.QApplication.translate("ConfigureDialog", "identifier:  ", None, QtGui.QApplication.UnicodeUTF8))
+        ConfigureDialog.setWindowTitle(QCoreApplication.translate("ConfigureDialog", u"Configure Step", None))
+        self.configGroupBox.setTitle("")
+        self.identifier_label.setText(QCoreApplication.translate("ConfigureDialog", u"identifier:  ", None))
+    # retranslateUi
 

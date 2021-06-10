@@ -1,145 +1,198 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'mapclientplugins\imagebasedfiducialmarkersstep\qt\imagebasedfiducialmarkerswidget.ui'
-#
-# Created: Fri Nov  2 14:14:13 2018
-#      by: pyside-uic 0.2.15 running on PySide 1.2.4
-#
-# WARNING! All changes made in this file will be lost!
+################################################################################
+## Form generated from reading UI file 'imagebasedfiducialmarkerswidget.ui'
+##
+## Created by: Qt User Interface Compiler version 5.15.2
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
 
-from PySide import QtCore, QtGui
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
+
+from opencmiss\zincwidgets\basesceneviewerwidget import BaseSceneviewerWidget
+
 
 class Ui_ImageBasedFiducialMarkersWidget(object):
-    def setupUi(self, shared_open_gl_widget, ImageBasedFiducialMarkersWidget):
-        ImageBasedFiducialMarkersWidget.setObjectName("ImageBasedFiducialMarkersWidget")
+    def setupUi(self, ImageBasedFiducialMarkersWidget):
+        if not ImageBasedFiducialMarkersWidget.objectName():
+            ImageBasedFiducialMarkersWidget.setObjectName(u"ImageBasedFiducialMarkersWidget")
         ImageBasedFiducialMarkersWidget.resize(870, 576)
-        self.horizontalLayout = QtGui.QHBoxLayout(ImageBasedFiducialMarkersWidget)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.controlPanel_groupBox = QtGui.QGroupBox(ImageBasedFiducialMarkersWidget)
-        self.controlPanel_groupBox.setObjectName("controlPanel_groupBox")
-        self.verticalLayout = QtGui.QVBoxLayout(self.controlPanel_groupBox)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.time_groupBox = QtGui.QGroupBox(self.controlPanel_groupBox)
-        self.time_groupBox.setObjectName("time_groupBox")
-        self.gridLayout_4 = QtGui.QGridLayout(self.time_groupBox)
-        self.gridLayout_4.setObjectName("gridLayout_4")
-        self.timePlayStop_pushButton = QtGui.QPushButton(self.time_groupBox)
-        self.timePlayStop_pushButton.setObjectName("timePlayStop_pushButton")
+        self.horizontalLayout = QHBoxLayout(ImageBasedFiducialMarkersWidget)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.controlPanel_groupBox = QGroupBox(ImageBasedFiducialMarkersWidget)
+        self.controlPanel_groupBox.setObjectName(u"controlPanel_groupBox")
+        self.verticalLayout = QVBoxLayout(self.controlPanel_groupBox)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.time_groupBox = QGroupBox(self.controlPanel_groupBox)
+        self.time_groupBox.setObjectName(u"time_groupBox")
+        self.gridLayout_4 = QGridLayout(self.time_groupBox)
+        self.gridLayout_4.setObjectName(u"gridLayout_4")
+        self.timePlayStop_pushButton = QPushButton(self.time_groupBox)
+        self.timePlayStop_pushButton.setObjectName(u"timePlayStop_pushButton")
+
         self.gridLayout_4.addWidget(self.timePlayStop_pushButton, 1, 1, 1, 1)
-        self.timeValue_label = QtGui.QLabel(self.time_groupBox)
-        self.timeValue_label.setObjectName("timeValue_label")
+
+        self.timeValue_label = QLabel(self.time_groupBox)
+        self.timeValue_label.setObjectName(u"timeValue_label")
+
         self.gridLayout_4.addWidget(self.timeValue_label, 0, 0, 1, 1)
-        self.timeValue_doubleSpinBox = QtGui.QDoubleSpinBox(self.time_groupBox)
-        self.timeValue_doubleSpinBox.setMaximum(12000.0)
-        self.timeValue_doubleSpinBox.setObjectName("timeValue_doubleSpinBox")
+
+        self.timeValue_doubleSpinBox = QDoubleSpinBox(self.time_groupBox)
+        self.timeValue_doubleSpinBox.setObjectName(u"timeValue_doubleSpinBox")
+        self.timeValue_doubleSpinBox.setMaximum(12000.000000000000000)
+
         self.gridLayout_4.addWidget(self.timeValue_doubleSpinBox, 0, 1, 1, 1)
-        self.timeLoop_checkBox = QtGui.QCheckBox(self.time_groupBox)
-        self.timeLoop_checkBox.setObjectName("timeLoop_checkBox")
+
+        self.timeLoop_checkBox = QCheckBox(self.time_groupBox)
+        self.timeLoop_checkBox.setObjectName(u"timeLoop_checkBox")
+
         self.gridLayout_4.addWidget(self.timeLoop_checkBox, 1, 2, 1, 1)
+
+
         self.verticalLayout.addWidget(self.time_groupBox)
-        self.video_groupBox = QtGui.QGroupBox(self.controlPanel_groupBox)
-        self.video_groupBox.setObjectName("video_groupBox")
-        self.gridLayout_2 = QtGui.QGridLayout(self.video_groupBox)
-        self.gridLayout_2.setObjectName("gridLayout_2")
-        self.frameIndex_label = QtGui.QLabel(self.video_groupBox)
-        self.frameIndex_label.setObjectName("frameIndex_label")
+
+        self.video_groupBox = QGroupBox(self.controlPanel_groupBox)
+        self.video_groupBox.setObjectName(u"video_groupBox")
+        self.gridLayout_2 = QGridLayout(self.video_groupBox)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.frameIndex_label = QLabel(self.video_groupBox)
+        self.frameIndex_label.setObjectName(u"frameIndex_label")
+
         self.gridLayout_2.addWidget(self.frameIndex_label, 0, 0, 1, 1)
-        self.framesPerSecond_spinBox = QtGui.QSpinBox(self.video_groupBox)
+
+        self.framesPerSecond_spinBox = QSpinBox(self.video_groupBox)
+        self.framesPerSecond_spinBox.setObjectName(u"framesPerSecond_spinBox")
         self.framesPerSecond_spinBox.setMinimum(1)
-        self.framesPerSecond_spinBox.setProperty("value", 25)
-        self.framesPerSecond_spinBox.setObjectName("framesPerSecond_spinBox")
+        self.framesPerSecond_spinBox.setValue(25)
+
         self.gridLayout_2.addWidget(self.framesPerSecond_spinBox, 1, 1, 1, 1)
-        self.framesPerSecond_label = QtGui.QLabel(self.video_groupBox)
-        self.framesPerSecond_label.setObjectName("framesPerSecond_label")
+
+        self.framesPerSecond_label = QLabel(self.video_groupBox)
+        self.framesPerSecond_label.setObjectName(u"framesPerSecond_label")
+
         self.gridLayout_2.addWidget(self.framesPerSecond_label, 1, 0, 1, 1)
-        self.frameIndex_spinBox = QtGui.QSpinBox(self.video_groupBox)
+
+        self.frameIndex_spinBox = QSpinBox(self.video_groupBox)
+        self.frameIndex_spinBox.setObjectName(u"frameIndex_spinBox")
         self.frameIndex_spinBox.setMinimum(1)
         self.frameIndex_spinBox.setMaximum(10000)
-        self.frameIndex_spinBox.setObjectName("frameIndex_spinBox")
+
         self.gridLayout_2.addWidget(self.frameIndex_spinBox, 0, 1, 1, 1)
-        self.numFrames_frame = QtGui.QFrame(self.video_groupBox)
-        self.numFrames_frame.setFrameShape(QtGui.QFrame.StyledPanel)
-        self.numFrames_frame.setFrameShadow(QtGui.QFrame.Raised)
-        self.numFrames_frame.setObjectName("numFrames_frame")
-        self.horizontalLayout_4 = QtGui.QHBoxLayout(self.numFrames_frame)
+
+        self.numFrames_frame = QFrame(self.video_groupBox)
+        self.numFrames_frame.setObjectName(u"numFrames_frame")
+        self.numFrames_frame.setFrameShape(QFrame.StyledPanel)
+        self.numFrames_frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_4 = QHBoxLayout(self.numFrames_frame)
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
-        self.numFrames_label = QtGui.QLabel(self.numFrames_frame)
-        self.numFrames_label.setObjectName("numFrames_label")
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.numFrames_label = QLabel(self.numFrames_frame)
+        self.numFrames_label.setObjectName(u"numFrames_label")
+
         self.horizontalLayout_4.addWidget(self.numFrames_label)
-        self.numFramesValue_label = QtGui.QLabel(self.numFrames_frame)
-        self.numFramesValue_label.setObjectName("numFramesValue_label")
+
+        self.numFramesValue_label = QLabel(self.numFrames_frame)
+        self.numFramesValue_label.setObjectName(u"numFramesValue_label")
+
         self.horizontalLayout_4.addWidget(self.numFramesValue_label)
+
+
         self.gridLayout_2.addWidget(self.numFrames_frame, 0, 2, 1, 1)
+
+
         self.verticalLayout.addWidget(self.video_groupBox)
-        self.tracking_groupBox = QtGui.QGroupBox(self.controlPanel_groupBox)
-        self.tracking_groupBox.setObjectName("tracking_groupBox")
-        self.horizontalLayout_5 = QtGui.QHBoxLayout(self.tracking_groupBox)
-        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.track_pushButton = QtGui.QPushButton(self.tracking_groupBox)
-        self.track_pushButton.setObjectName("track_pushButton")
+
+        self.tracking_groupBox = QGroupBox(self.controlPanel_groupBox)
+        self.tracking_groupBox.setObjectName(u"tracking_groupBox")
+        self.horizontalLayout_5 = QHBoxLayout(self.tracking_groupBox)
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.track_pushButton = QPushButton(self.tracking_groupBox)
+        self.track_pushButton.setObjectName(u"track_pushButton")
+
         self.horizontalLayout_5.addWidget(self.track_pushButton)
-        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout_5.addItem(spacerItem)
+
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_5.addItem(self.horizontalSpacer_2)
+
+
         self.verticalLayout.addWidget(self.tracking_groupBox)
-        spacerItem1 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem1)
-        self.groupBox = QtGui.QGroupBox(self.controlPanel_groupBox)
-        self.groupBox.setTitle("")
-        self.groupBox.setObjectName("groupBox")
-        self.horizontalLayout_3 = QtGui.QHBoxLayout(self.groupBox)
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.statusText_label = QtGui.QLabel(self.groupBox)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer)
+
+        self.groupBox = QGroupBox(self.controlPanel_groupBox)
+        self.groupBox.setObjectName(u"groupBox")
+        self.horizontalLayout_3 = QHBoxLayout(self.groupBox)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.statusText_label = QLabel(self.groupBox)
+        self.statusText_label.setObjectName(u"statusText_label")
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(1)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.statusText_label.sizePolicy().hasHeightForWidth())
         self.statusText_label.setSizePolicy(sizePolicy)
-        self.statusText_label.setObjectName("statusText_label")
+
         self.horizontalLayout_3.addWidget(self.statusText_label)
+
+
         self.verticalLayout.addWidget(self.groupBox)
-        self.frame = QtGui.QFrame(self.controlPanel_groupBox)
-        self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
-        self.frame.setFrameShadow(QtGui.QFrame.Raised)
-        self.frame.setObjectName("frame")
-        self.horizontalLayout_2 = QtGui.QHBoxLayout(self.frame)
+
+        self.frame = QFrame(self.controlPanel_groupBox)
+        self.frame.setObjectName(u"frame")
+        self.frame.setFrameShape(QFrame.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_2 = QHBoxLayout(self.frame)
         self.horizontalLayout_2.setContentsMargins(1, 1, 1, 1)
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.done_pushButton = QtGui.QPushButton(self.frame)
-        self.done_pushButton.setObjectName("done_pushButton")
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.done_pushButton = QPushButton(self.frame)
+        self.done_pushButton.setObjectName(u"done_pushButton")
+
         self.horizontalLayout_2.addWidget(self.done_pushButton)
-        spacerItem2 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem2)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_2.addItem(self.horizontalSpacer)
+
+
         self.verticalLayout.addWidget(self.frame)
+
+
         self.horizontalLayout.addWidget(self.controlPanel_groupBox)
-        self.sceneviewer_widget = BaseSceneviewerWidget(ImageBasedFiducialMarkersWidget, shared_open_gl_widget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
+
+        self.sceneviewer_widget = BaseSceneviewerWidget(ImageBasedFiducialMarkersWidget)
+        self.sceneviewer_widget.setObjectName(u"sceneviewer_widget")
         sizePolicy.setHeightForWidth(self.sceneviewer_widget.sizePolicy().hasHeightForWidth())
         self.sceneviewer_widget.setSizePolicy(sizePolicy)
-        self.sceneviewer_widget.setObjectName("sceneviewer_widget")
+
         self.horizontalLayout.addWidget(self.sceneviewer_widget)
 
+
         self.retranslateUi(ImageBasedFiducialMarkersWidget)
-        QtCore.QMetaObject.connectSlotsByName(ImageBasedFiducialMarkersWidget)
+
+        QMetaObject.connectSlotsByName(ImageBasedFiducialMarkersWidget)
+    # setupUi
 
     def retranslateUi(self, ImageBasedFiducialMarkersWidget):
-        ImageBasedFiducialMarkersWidget.setWindowTitle(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Image Based Fiducial Markers", None, QtGui.QApplication.UnicodeUTF8))
-        self.controlPanel_groupBox.setTitle(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Control Panel", None, QtGui.QApplication.UnicodeUTF8))
-        self.time_groupBox.setTitle(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Time:", None, QtGui.QApplication.UnicodeUTF8))
-        self.timePlayStop_pushButton.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Play", None, QtGui.QApplication.UnicodeUTF8))
-        self.timeValue_label.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Time value:", None, QtGui.QApplication.UnicodeUTF8))
-        self.timeLoop_checkBox.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Loop", None, QtGui.QApplication.UnicodeUTF8))
-        self.video_groupBox.setTitle(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Video:", None, QtGui.QApplication.UnicodeUTF8))
-        self.frameIndex_label.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Frame index:", None, QtGui.QApplication.UnicodeUTF8))
-        self.framesPerSecond_label.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Frames per second:", None, QtGui.QApplication.UnicodeUTF8))
-        self.numFrames_label.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "# frames:", None, QtGui.QApplication.UnicodeUTF8))
-        self.numFramesValue_label.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
-        self.tracking_groupBox.setTitle(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Tracking:", None, QtGui.QApplication.UnicodeUTF8))
-        self.track_pushButton.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Track", None, QtGui.QApplication.UnicodeUTF8))
-        self.statusText_label.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
-        self.done_pushButton.setText(QtGui.QApplication.translate("ImageBasedFiducialMarkersWidget", "Done", None, QtGui.QApplication.UnicodeUTF8))
+        ImageBasedFiducialMarkersWidget.setWindowTitle(QCoreApplication.translate("ImageBasedFiducialMarkersWidget", u"Image Based Fiducial Markers", None))
+        self.controlPanel_groupBox.setTitle(QCoreApplication.translate("ImageBasedFiducialMarkersWidget", u"Control Panel", None))
+        self.time_groupBox.setTitle(QCoreApplication.translate("ImageBasedFiducialMarkersWidget", u"Time:", None))
+        self.timePlayStop_pushButton.setText(QCoreApplication.translate("ImageBasedFiducialMarkersWidget", u"Play", None))
+        self.timeValue_label.setText(QCoreApplication.translate("ImageBasedFiducialMarkersWidget", u"Time value:", None))
+        self.timeLoop_checkBox.setText(QCoreApplication.translate("ImageBasedFiducialMarkersWidget", u"Loop", None))
+        self.video_groupBox.setTitle(QCoreApplication.translate("ImageBasedFiducialMarkersWidget", u"Video:", None))
+        self.frameIndex_label.setText(QCoreApplication.translate("ImageBasedFiducialMarkersWidget", u"Frame index:", None))
+        self.framesPerSecond_label.setText(QCoreApplication.translate("ImageBasedFiducialMarkersWidget", u"Frames per second:", None))
+        self.numFrames_label.setText(QCoreApplication.translate("ImageBasedFiducialMarkersWidget", u"# frames:", None))
+        self.numFramesValue_label.setText(QCoreApplication.translate("ImageBasedFiducialMarkersWidget", u"TextLabel", None))
+        self.tracking_groupBox.setTitle(QCoreApplication.translate("ImageBasedFiducialMarkersWidget", u"Tracking:", None))
+        self.track_pushButton.setText(QCoreApplication.translate("ImageBasedFiducialMarkersWidget", u"Track", None))
+        self.groupBox.setTitle("")
+        self.statusText_label.setText(QCoreApplication.translate("ImageBasedFiducialMarkersWidget", u"TextLabel", None))
+        self.done_pushButton.setText(QCoreApplication.translate("ImageBasedFiducialMarkersWidget", u"Done", None))
+    # retranslateUi
 
-
-from opencmiss.zincwidgets.basesceneviewerwidget import BaseSceneviewerWidget

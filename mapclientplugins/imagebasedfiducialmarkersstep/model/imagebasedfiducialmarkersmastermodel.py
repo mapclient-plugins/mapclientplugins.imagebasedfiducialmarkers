@@ -1,6 +1,6 @@
 from __future__ import division
 
-from PySideX import QtCore
+from PySide2 import QtCore
 from opencmiss.utils.zinc import defineStandardVisualisationTools
 
 from mapclientplugins.imagebasedfiducialmarkersstep.model.imageplanemodel import ImagePlaneModel
