@@ -12,7 +12,7 @@ from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
-from opencmiss\zincwidgets\basesceneviewerwidget import BaseSceneviewerWidget
+from opencmiss.utils.zinc.widgets.basesceneviewerwidget import BaseSceneviewerWidget
 
 
 class Ui_ImageBasedFiducialMarkersWidget(object):
@@ -87,8 +87,8 @@ class Ui_ImageBasedFiducialMarkersWidget(object):
         self.numFrames_frame.setFrameShape(QFrame.StyledPanel)
         self.numFrames_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_4 = QHBoxLayout(self.numFrames_frame)
-        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.numFrames_label = QLabel(self.numFrames_frame)
         self.numFrames_label.setObjectName(u"numFrames_label")
 
@@ -147,8 +147,8 @@ class Ui_ImageBasedFiducialMarkersWidget(object):
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_2 = QHBoxLayout(self.frame)
-        self.horizontalLayout_2.setContentsMargins(1, 1, 1, 1)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalLayout_2.setContentsMargins(1, 1, 1, 1)
         self.done_pushButton = QPushButton(self.frame)
         self.done_pushButton.setObjectName(u"done_pushButton")
 
