@@ -1,5 +1,3 @@
-
-
 class DataPointTool(object):
 
     def __init__(self, points_model, plane_model):

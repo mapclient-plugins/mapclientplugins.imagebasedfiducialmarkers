@@ -1,7 +1,6 @@
+from PySide2 import QtCore, QtWidgets
 
-from PySide import QtGui, QtCore
-
-from opencmiss.zinchandlers.scenemanipulation import SceneManipulation
+from opencmiss.utils.zinc.handlers.scenemanipulation import SceneManipulation
 
 from mapclientplugins.imagebasedfiducialmarkersstep.handlers.datapointadder import DataPointAdder
 from mapclientplugins.imagebasedfiducialmarkersstep.handlers.datapointlabeller import DataPointLabeler
@@ -9,14 +8,14 @@ from mapclientplugins.imagebasedfiducialmarkersstep.handlers.datapointremover im
 from mapclientplugins.imagebasedfiducialmarkersstep.static.strings import SET_TRACKING_POINTS_STRING
 from mapclientplugins.imagebasedfiducialmarkersstep.tools.datapointtool import DataPointTool
 from mapclientplugins.imagebasedfiducialmarkersstep.tools.trackingtool import TrackingTool
-from mapclientplugins.imagebasedfiducialmarkersstep.view.ui_imagebasedfiducialmarkerswidget\
+from mapclientplugins.imagebasedfiducialmarkersstep.view.ui_imagebasedfiducialmarkerswidget \
     import Ui_ImageBasedFiducialMarkersWidget
 
 PLAY_TEXT = 'Play'
 STOP_TEXT = 'Stop'
 
 
-class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
+class ImageBasedFiducialMarkersWidget(QtWidgets.QWidget):
 
     def __init__(self, model, parent=None):
         super(ImageBasedFiducialMarkersWidget, self).__init__(parent)
@@ -105,10 +104,10 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
 
     def _track_button_clicked(self):
         if self._tracking_tool.count():
-            QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+            QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
             frame_index = self._ui.frameIndex_spinBox.value()
             self._tracking_tool.track_key_points(frame_index)
-            QtGui.QApplication.restoreOverrideCursor()
+            QtWidgets.QApplication.restoreOverrideCursor()
 
     def _setup_handlers(self):
         basic_handler = SceneManipulation()
@@ -134,9 +133,9 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
         self._ui.sceneviewer_widget.unregister_key_listener(QtCore.Qt.Key_Return)
 
         # Perform the tracking for all images.
-        QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+        QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         self._tracking_tool.track_key_points()
-        QtGui.QApplication.restoreOverrideCursor()
+        QtWidgets.QApplication.restoreOverrideCursor()
 
     def _enter_finalise_tracking_points(self):
         self._ui.sceneviewer_widget.register_handler(self._data_point_adder)
@@ -152,13 +151,13 @@ class ImageBasedFiducialMarkersWidget(QtGui.QWidget):
 
     def _add_labels_as_actions(self, menu, labels):
         for label in labels:
-            label_action = QtGui.QAction(menu)
+            label_action = QtWidgets.QAction(menu)
             label_action.setText(label)
             label_action.triggered.connect(self._label_clicked)
             menu.addAction(label_action)
 
     def _show_context_menu(self, x, y, used_labels, unused_labels):
-        menu = QtGui.QMenu(self._ui.sceneviewer_widget)
+        menu = QtWidgets.QMenu(self._ui.sceneviewer_widget)
 
         self._add_labels_as_actions(menu, unused_labels)
         menu.addSeparator()

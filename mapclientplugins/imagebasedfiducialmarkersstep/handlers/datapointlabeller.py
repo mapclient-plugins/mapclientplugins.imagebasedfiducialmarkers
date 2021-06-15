@@ -1,7 +1,6 @@
+from PySide2 import QtCore
 
-from PySide import QtCore
-
-from opencmiss.zinchandlers.keyactivatedhandler import KeyActivatedHandler
+from opencmiss.utils.zinc.handlers.keyactivatedhandler import KeyActivatedHandler
 
 
 class DataPointLabeler(KeyActivatedHandler):

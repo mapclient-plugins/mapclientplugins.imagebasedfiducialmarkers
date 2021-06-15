@@ -1,11 +1,10 @@
-
 """
 MAP Client Plugin Step
 """
 import json
 import os
 
-from PySide import QtGui
+from PySide2 import QtGui
 
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.imagebasedfiducialmarkersstep.configuredialog import ConfigureDialog
@@ -23,7 +22,7 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
 
     def __init__(self, location):
         super(ImageBasedFiducialMarkersStep, self).__init__('Image Based Fiducial Markers', location)
-        self._configured = False # A step cannot be executed until it has been configured.
+        self._configured = False  # A step cannot be executed until it has been configured.
         self._category = 'Image Processing'
         # Add any other initialisation code here:
         self._icon = QtGui.QImage(':/imagebasedfiducialmarkersstep/images/image-processing.png')
@@ -37,7 +36,7 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#image_context_data'))
         self.addPort(self._time_labelled_fiducial_marker_locations)
         # Port data:
-        self._fiducial_marker_data = None # fiducial_marker_data
+        self._fiducial_marker_data = None  # fiducial_marker_data
         self._images_context_data = None
         # Config:
         self._config = {'identifier': ''}
@@ -94,7 +93,7 @@ class ImageBasedFiducialMarkersStep(WorkflowStepMountPoint):
         :param index: Index of the port to return.
         :param dataIn: The data to set for the port at the given index.
         """
-        self._images_context_data = dataIn # http://physiomeproject.org/workflow/1.0/rdf-schema#image_context_data
+        self._images_context_data = dataIn  # http://physiomeproject.org/workflow/1.0/rdf-schema#image_context_data
 
     def getPortData(self, index):
         """
