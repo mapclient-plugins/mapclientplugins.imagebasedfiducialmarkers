@@ -1,7 +1,6 @@
 from __future__ import division
 
 from PySide2 import QtCore
-#from opencmiss.utils.zinc import defineStandardVisualisationTools
 from opencmiss.utils.zinc.general import defineStandardGraphicsObjects
 
 from mapclientplugins.imagebasedfiducialmarkersstep.model.imageplanemodel import ImagePlaneModel
@@ -19,7 +18,6 @@ class ImageBasedFiducialMarkersMasterModel(object):
 
         self._context = image_context_data.get_context()
         self._shareable_widget = image_context_data.get_shareable_open_gl_widget()
-        #defineStandardVisualisationTools(self._context)
         defineStandardGraphicsObjects(self._context)
         self._default_region = self._context.getDefaultRegion()
 
