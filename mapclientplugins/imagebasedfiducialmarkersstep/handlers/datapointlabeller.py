@@ -1,4 +1,4 @@
-from PySide2 import QtCore
+from PySide6 import QtCore
 
 from opencmiss.utils.zinc.handlers.keyactivatedhandler import KeyActivatedHandler
 

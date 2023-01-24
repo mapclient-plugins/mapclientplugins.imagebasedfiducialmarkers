@@ -37,7 +37,7 @@ def readfile(filename, split=False):
 readme = readfile("README.rst", split=True)[3:]  # skip title
 # For requirements not hosted on PyPi place listings
 # into the 'requirements.txt' file.
-requires = ['PySideX',
+requires = ['PySide6',
             'numpy',
             'git+https://github.com/scardine/image_size',
             'opencmiss.utils>=0.1.4',
