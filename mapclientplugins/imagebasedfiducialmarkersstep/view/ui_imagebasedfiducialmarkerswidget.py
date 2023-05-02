@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QDoubleSpinBox, QFrame,
     QPushButton, QSizePolicy, QSpacerItem, QSpinBox,
     QVBoxLayout, QWidget)
 
-from opencmiss.utils.zinc.widgets.basesceneviewerwidget import BaseSceneviewerWidget
+from cmlibs.widgets.basesceneviewerwidget import BaseSceneviewerWidget
 
 class Ui_ImageBasedFiducialMarkersWidget(object):
     def setupUi(self, ImageBasedFiducialMarkersWidget):

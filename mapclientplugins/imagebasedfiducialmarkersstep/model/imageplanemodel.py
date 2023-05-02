@@ -1,7 +1,7 @@
 from __future__ import division
 
 
-from opencmiss.utils.maths.algorithms import calculate_line_plane_intersection
+from cmlibs.maths.algorithms import calculate_line_plane_intersection
 
 
 class ImagePlaneModel(object):

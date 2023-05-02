@@ -40,8 +40,8 @@ readme = readfile("README.rst", split=True)[3:]  # skip title
 requires = ['PySide6',
             'numpy',
             'git+https://github.com/scardine/image_size',
-            'opencmiss.utils>=0.1.4',
-            'opencmiss.zincwidgets']  # minimal requirements listing
+            'cmlibs.utils>=0.1.4',
+            'cmlibs.widgets']  # minimal requirements listing
 source_license = readfile("LICENSE")
 
 

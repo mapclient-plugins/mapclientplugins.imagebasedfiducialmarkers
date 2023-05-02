@@ -1,4 +1,4 @@
-from opencmiss.utils.zinc.handlers.keyactivatedhandler import KeyActivatedHandler
+from cmlibs.widgets.handlers.keyactivatedhandler import KeyActivatedHandler
 
 
 class DataPointAdder(KeyActivatedHandler):

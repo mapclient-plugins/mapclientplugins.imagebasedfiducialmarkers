@@ -1,6 +1,6 @@
-from opencmiss.zinc.status import OK as CMISS_OK
-from opencmiss.utils.zinc.field import create_field_finite_element
-from opencmiss.utils.zinc.general import create_node, AbstractNodeDataObject
+from cmlibs.zinc.status import OK as CMISS_OK
+from cmlibs.utils.zinc.field import create_field_finite_element
+from cmlibs.utils.zinc.general import create_node, AbstractNodeDataObject
 
 
 class NodeCreator(AbstractNodeDataObject):

@@ -1,6 +1,6 @@
 from PySide6 import QtCore, QtWidgets
 
-from opencmiss.utils.zinc.handlers.scenemanipulation import SceneManipulation
+from cmlibs.widgets.handlers.scenemanipulation import SceneManipulation
 
 from mapclientplugins.imagebasedfiducialmarkersstep.handlers.datapointadder import DataPointAdder
 from mapclientplugins.imagebasedfiducialmarkersstep.handlers.datapointlabeller import DataPointLabeler

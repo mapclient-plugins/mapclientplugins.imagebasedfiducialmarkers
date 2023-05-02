@@ -3,9 +3,9 @@ import numpy as np
 from sparc.videotracking.processing import Processing
 from sparc.videotracking.lkopticalflow import LKOpticalFlow
 
-from opencmiss.zinc.scenecoordinatesystem import SCENECOORDINATESYSTEM_LOCAL, \
+from cmlibs.zinc.scenecoordinatesystem import SCENECOORDINATESYSTEM_LOCAL, \
     SCENECOORDINATESYSTEM_WINDOW_PIXEL_TOP_LEFT
-from opencmiss.zinc.field import FieldFindMeshLocation
+from cmlibs.zinc.field import FieldFindMeshLocation
 
 
 class TrackingTool(object):

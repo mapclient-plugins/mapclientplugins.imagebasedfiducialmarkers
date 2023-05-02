@@ -1,7 +1,7 @@
 from __future__ import division
 
 from PySide6 import QtCore
-from opencmiss.utils.zinc.general import defineStandardGraphicsObjects
+from cmlibs.utils.zinc.general import defineStandardGraphicsObjects
 
 from mapclientplugins.imagebasedfiducialmarkersstep.model.imageplanemodel import ImagePlaneModel
 from mapclientplugins.imagebasedfiducialmarkersstep.model.trackingpointsmodel import TrackingPointsModel

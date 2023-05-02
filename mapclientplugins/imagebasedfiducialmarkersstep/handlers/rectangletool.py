@@ -1,6 +1,6 @@
-from opencmiss.zinc.glyph import Glyph
-from opencmiss.zinc.scenecoordinatesystem import SCENECOORDINATESYSTEM_WINDOW_PIXEL_TOP_LEFT
-from opencmiss.utils.zinc.handlers.keyactivatedhandler import KeyActivatedHandler
+from cmlibs.zinc.glyph import Glyph
+from cmlibs.zinc.scenecoordinatesystem import SCENECOORDINATESYSTEM_WINDOW_PIXEL_TOP_LEFT
+from cmlibs.widgets.handlers.keyactivatedhandler import KeyActivatedHandler
 
 
 class RectangleTool(KeyActivatedHandler):
