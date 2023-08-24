@@ -61,8 +61,8 @@ def _determine_the_mesh_location(scene_viewer, x, y, element, coordinate_field):
     mesh = element.getMesh()
     field_module = mesh.getFieldmodule()
     field_module.beginChange()
-    element_group = field_module.createFieldElementGroup(mesh)
-    mesh_group = element_group.getMeshGroup()
+    field_group = field_module.createFieldGroup()
+    mesh_group = field_group.createMeshGroup(mesh)
     mesh_group.addElement(element)
     field_mouse_location = field_module.createFieldConstant([x, -y])
 
@@ -86,7 +86,7 @@ def _determine_the_mesh_location(scene_viewer, x, y, element, coordinate_field):
     del field_scene_viewer_projection
     del field_mouse_location
     del mesh_group
-    del element_group
+    del field_group
     del coordinate_field
 
     field_module.endChange()

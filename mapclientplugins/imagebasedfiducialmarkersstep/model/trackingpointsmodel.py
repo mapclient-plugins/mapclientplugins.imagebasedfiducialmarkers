@@ -243,8 +243,7 @@ class TrackingPointsModel(object):
 
         # Setup the selection fields
         self._selection_group_field = field_module.createFieldGroup()
-        selection_group = self._selection_group_field.createFieldNodeGroup(node_set)
-        self._selection_group = selection_group.getNodesetGroup()
+        self._selection_group = self._selection_group_field.createNodesetGroup(node_set)
         field_module.endChange()
 
     def clear(self):
